@@ -1,8 +1,0 @@
-Executable : D:\sdk2\cmake\3.10.2.4988404\bin\ninja.exe
-arguments : 
--C
-D:\rootes-main (2)\rootes-main\app\.cxx\cmake\debug\arm64-v8a
-frameinfo
-native-lib
-jvmArgs : 
-

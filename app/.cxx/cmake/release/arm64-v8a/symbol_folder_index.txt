@@ -1,1 +1,0 @@
-D:\rootes-main (2)\rootes-main\app\build\intermediates\cmake\release\obj\arm64-v8a
