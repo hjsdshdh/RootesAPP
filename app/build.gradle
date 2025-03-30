@@ -58,7 +58,7 @@ android {
             shrinkResources true
             
             // 签名配置
-            signingConfig signingConfigs.omarea_Signing
+            // signingConfig signingConfigs.omarea_Signing
 
             // 优化配置
             zipAlignEnabled true
