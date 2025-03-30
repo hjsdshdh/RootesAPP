@@ -1,0 +1,3 @@
+apk=$(cat /sdcard/Android/yc/uperf/cur_powermode.txt)
+
+echo 调度模式 $apk

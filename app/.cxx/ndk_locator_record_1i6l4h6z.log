@@ -1,0 +1,46 @@
+[
+  {
+    "level": "INFO",
+    "message": "android.ndkVersion from module build.gradle is 27.0.12077973"
+  },
+  {
+    "level": "INFO",
+    "message": "ndk.dir in local.properties is not set"
+  },
+  {
+    "level": "INFO",
+    "message": "ANDROID_NDK_HOME environment variable is not set"
+  },
+  {
+    "level": "INFO",
+    "message": "sdkFolder is D:\\sdk"
+  },
+  {
+    "level": "INFO",
+    "message": "Considering D:\\sdk\\ndk-bundle in SDK ndk-bundle folder"
+  },
+  {
+    "level": "INFO",
+    "message": "Considering D:\\sdk\\ndk\\21.0.6113669 in SDK ndk folder"
+  },
+  {
+    "level": "INFO",
+    "message": "Considering D:\\sdk\\ndk\\26.3.11579264 in SDK ndk folder"
+  },
+  {
+    "level": "INFO",
+    "message": "Considering D:\\sdk\\ndk\\27.0.12077973 in SDK ndk folder"
+  },
+  {
+    "level": "INFO",
+    "message": "Rejected D:\\sdk\\ndk-bundle in SDK ndk-bundle folder because that location has no source.properties"
+  },
+  {
+    "level": "INFO",
+    "message": "Rejected D:\\sdk\\ndk\\21.0.6113669 in SDK ndk folder because that location has no source.properties"
+  },
+  {
+    "level": "INFO",
+    "message": "Found requested NDK version 27.0.12077973 at D:\\sdk\\ndk\\27.0.12077973"
+  }
+]

@@ -1,0 +1,164 @@
+package com.root.api
+
+import android.app.AlertDialog
+import android.content.Context
+import android.media.MediaPlayer
+import android.os.Handler
+import android.util.Log
+import android.widget.SeekBar
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import java.io.IOException
+
+class MediaPlayerManager(private val context: Context) {
+
+    private var mediaPlayer: MediaPlayer? = null
+    private var dialog: AlertDialog? = null
+    private var isPlaying = false
+    private val handler = Handler()
+    private lateinit var seekBar: SeekBar
+    private lateinit var tvStatus: TextView
+
+    companion object {
+        private const val TAG = "MediaPlayerManager"
+    }
+
+    /**
+     * 播放本地文件
+     */
+    fun playLocalFile(filePath: String) {
+        // 先释放上一个 MediaPlayer 实例
+        mediaPlayer?.reset()
+
+        try {
+            mediaPlayer = MediaPlayer().apply {
+                setDataSource(filePath)
+                prepare() // 预加载
+                start()  // 开始播放
+                isPlaying = true
+                showToast("正在播放本地文件")
+                showPlayerDialog() // 显示播放对话框
+                updateProgress() // 更新进度条
+            }
+        } catch (e: IOException) {
+            Log.e(TAG, "播放本地文件时出错: ${e.message}")
+            showToast("播放本地文件失败")
+        }
+    }
+
+    /**
+     * 播放远程文件
+     */
+    fun playRemoteFile(url: String) {
+        // 先释放上一个 MediaPlayer 实例
+        mediaPlayer?.reset()
+
+        try {
+            mediaPlayer = MediaPlayer().apply {
+                setDataSource(url)
+                prepareAsync() // 异步预加载
+                setOnPreparedListener {
+                    start()  // 开始播放
+                    isPlaying = true
+                    showToast("正在播放远程文件")
+                    showPlayerDialog() // 显示播放对话框
+                    updateProgress() // 更新进度条
+                }
+                setOnErrorListener { _, _, _ ->
+                    showToast("播放远程文件失败")
+                    false
+                }
+            }
+        } catch (e: IOException) {
+            Log.e(TAG, "播放远程文件时出错: ${e.message}")
+            showToast("播放远程文件失败")
+        }
+    }
+
+    /**
+     * 暂停播放
+     */
+    fun pausePlayback() {
+        mediaPlayer?.pause()
+        isPlaying = false
+        updateDialogStatus("暂停")
+        showToast("播放已暂停")
+    }
+
+    /**
+     * 停止播放
+     */
+    fun stopPlayback() {
+        mediaPlayer?.stop()
+        mediaPlayer?.release()
+        mediaPlayer = null
+        isPlaying = false
+        updateDialogStatus("停止")
+        showToast("播放已停止")
+    }
+
+    /**
+     * 显示播放状态的对话框
+     */
+    private fun showPlayerDialog() {
+        val builder = AlertDialog.Builder(context)
+        val dialogView = (context as AppCompatActivity).layoutInflater.inflate(R.layout.dialog_player, null)
+        builder.setView(dialogView)
+        builder.setCancelable(false) // 禁止对话框外点击取消
+
+        tvStatus = dialogView.findViewById(R.id.tvStatus)
+        seekBar = dialogView.findViewById(R.id.seekBar)
+        val btnPlayPause = dialogView.findViewById<Button>(R.id.btnPlayPause)
+
+        // 播放/暂停按钮逻辑
+        btnPlayPause.setOnClickListener {
+            if (isPlaying) {
+                pausePlayback()
+                btnPlayPause.text = "继续"
+            } else {
+                mediaPlayer?.start()
+                isPlaying = true
+                updateDialogStatus("正在播放")
+                btnPlayPause.text = "暂停"
+            }
+        }
+
+        dialog = builder.create()
+        dialog?.show()
+    }
+
+    /**
+     * 更新对话框中的播放状态
+     */
+    private fun updateDialogStatus(status: String) {
+        tvStatus.text = status
+    }
+
+    /**
+     * 更新进度条
+     */
+    private fun updateProgress() {
+        val runnable = object : Runnable {
+            override fun run() {
+                mediaPlayer?.let { mp ->
+                    val currentPosition = mp.currentPosition
+                    val duration = mp.duration
+                    val progress = (currentPosition.toFloat() / duration.toFloat() * 100).toInt()
+                    seekBar.progress = progress
+                    if (mp.isPlaying) {
+                        handler.postDelayed(this, 1000)
+                    }
+                }
+            }
+        }
+        handler.postDelayed(runnable, 1000)
+    }
+
+    /**
+     * 在主线程显示 Toast 消息
+     */
+    private fun showToast(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+}

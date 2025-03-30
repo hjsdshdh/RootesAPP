@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resource dir="file:///android_asset/Configuration_File" />
+<resource dir="file:///android_asset/samples" />
+<resource dir="file:///android_asset/usr/pages/display" />
+
+<group title="温馨提示">
+    <text>
+        <desc>功能介绍：从Android11开始，支持动态系统</desc>
+    </text>
+</group>
+
+<group title="功能专区">
+    
+    <action interruptible="false">
+        <title>安装GSI</title>
+        <set>. ./gsi.sh</set>
+        <params>
+        
+            <param name="SYSTEM_IMAGE_PATH" type="file" suffix="img" editable="true" title="可输入.sh文件绝对路径，也可以使用文件选择器选择文件" desc="温馨提示：可用「MT管理器」长按目录或文件 --&gt;点属性 --&gt;点击目录即可复制目录绝对路径，长按目录或长按名称即可复制文件绝对路径" required="true"/>
+      <param name="USERDATA_SIZE" label="输入内存大小" value="以MB为单位" required="true"/>
+        </params>
+    </action>
+    
+    
+    <switch auto-off="true" interruptible="true">
+        <title>锁定GSI</title>
+        <desc>关闭此开关为恢复默认</desc>
+        <get>. ./switchs/gsi_get.sh</get>
+        <set>. ./switchs/gsi_set.sh</set>
+    </switch>
+    </group>

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resource dir="file:///android_asset/Configuration_File" />
+<resource dir="file:///android_asset/samples" />
+<resource dir="file:///android_asset/usr/pages/display" />
+
+
+<group title="温馨提示">
+    <text>
+        <desc>功能介绍：屏幕处理</desc>
+    </text>
+</group>
+<group>
+<page title="系统界面" config="file:///android_asset/usr/pages/display/display.xml" />
+    
+        <page title="屏幕检测" activity="am start com.root.system/com.root.system.activities.ActivityTestColor" />
+    
+        <action reload="true" auto-off="true" interruptible="false" warn="开机自动锁定刷新率" shell="hidden" id="fps">
+            <title>锁定刷新率</title>
+            <param name="test">
+                <option value="1">120</option>
+                <option value="2">90</option>
+                <option value="0">60</option>
+                <option value="3">30</option>
+            </param>
+            <set>. ./fps_system.sh</set>
+    </action>
+    
+    <action>
+        <title>自定义过渡动画</title>
+        <desc>自定义手机过渡动画速度</desc>
+        <set>. ./Transition_animation.sh</set>
+        <params>
+            <param name="DongHua1" title="窗口动画缩放： 请输入数值" type="number" required="true" value-sh="settings get global window_animation_scale" />
+            <param name="DongHua2" title="过渡动画缩放： 请输入数值" type="number" required="true" value-sh="settings get global transition_animation_scale" />
+            <param name="DongHua3" title="动画程序时长缩放： 请输入数值" type="number" required="true" value-sh="settings get global animator_duration_scale" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action auto-off="true" id="@screen_off_timeout" reload="@screen_off_timeout">
+        <title>自定义自动锁屏时间</title>
+        <desc sh="echo -e 随意修改自动锁屏时间\\n当前自动锁屏时间为`settings get system screen_off_timeout`ms"></desc>
+        <set>settings put system screen_off_timeout $screen_off_timeout</set>
+        <params>
+            <param name="screen_off_timeout" title="请输入你要设置的自动锁屏时间，单位为：ms，1秒=1000ms" type="int" value-sh="settings get system screen_off_timeout" required="true" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action auto-off="true">
+        <title>修改屏幕亮度值</title>
+        <desc sh="echo -n 通过数字值，精准的修改亮度值，当前亮度值为`settings get system screen_brightness`"></desc>
+        <set>. ./screen_brightness.sh</set>
+        <params>
+            <param name="screen_brightness" title="请输入你要设置的屏幕亮度值来更改亮度值！输入限制值范围（0-1000）" max="1000" min="0" type="int" maxlength="4" />
+            <param name="screen_brightness2" title="你也可以选择滑动调整亮度" desc="只有当上方输入框没有填写数值时，滑动修改才会生效！" max="1000" min="0" type="seekbar" />
+        </params>
+    </action>
+    
+    <switch shell="hidden" auto-off="true" interruptible="false">
+        <title>色彩屏幕</title>
+        <get>. ./switchs/Rot_Get.sh</get>
+        <set>. ./switchs/Rot_Set.sh</set>
+    </switch>
+    
+    
+    
+<!-- START -->
+    <action auto-off="true" id="@dpi" reload="@dpi">
+        <title>自定义DPI</title>
+        <desc sh="echo -e &#34;当前设置的DPI值为`wm density|sed 's/Physical density/默认值/; s/Override density/当前值/'`&#34;"></desc>
+        <set>. ./dpi.sh</set>
+        <params>
+            <param name="dpi" title="请输入你要修改的DPI值，留空为恢复默认，为了保险限制为3位数字" type="int" min="220" max="700" maxlength="3"/>
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action auto-off="true">
+        <title>自定义屏幕分辨率</title>
+        <set>. ./Screen_Size.sh</set>
+        <params>
+            <param name="Screen_Size0" label="恢复默认" desc="当勾选时下方修改会无效" type="checkbox" />
+            <param name="Screen_Size_X" title="输入屏幕横向数值" placeholder="例如：1080" type="int" />
+            <param name="Screen_Size_Y" title="输入屏幕竖向数值" placeholder="例如：2400" type="int" />
+        </params>
+    </action>
+<!-- END -->
+
+<!-- START -->
+    <action>
+        <title>屏幕上下左右边距微调</title>
+        <set>wm overscan $Left,$Up,$Right,$Down</set>
+        <params>
+            <param name="Up" title="请输入你要微调的，［上面］高度，［-］代表相反调整，默认值0为恢复，必须输入数字" value="0" required="true" />
+            <param name="Down" title="请输入你要微调的，［下面］高度，［-］代表相反调整，默认值0为恢复，必须输入数字" value="0" required="true" />
+            <param name="Left" title="请输入你要微调的，［左边］高度，［-］代表相反调整，默认值0为恢复，必须输入数字" value="0" required="true" />
+            <param name="Right" title="请输入你要微调的，［右边］高度，［-］代表相反调整，默认值0为恢复，必须输入数字" value="0" required="true" />
+        </params>
+    </action>
+<!-- END -->
+
+<!-- START -->
+    <action interruptible="false" >
+        <title>屏幕饱和度调整</title>
+        <set>service call SurfaceFlinger 1022 f $Saturation</set>
+        <params>
+            <param name="Saturation" title="输入范围为0.00-2.00，如果想增加35%饱和度，就输入1.35" required="true" />
+        </params>
+    </action>
+<!-- END -->
+
+<!-- START -->
+    <action interruptible="false">
+        <title>自定义字体大小</title>
+        <set>settings put system font_scale $size</set>
+        <params>
+            <param name="size" required="true" type="number" desc="推荐值08 ~ 1.5"/>
+            <param name="a1" readonly="readonly" value-sh="echo 当前值：`settings get system font_scale`" />
+        </params>
+    </action>
+<!-- END -->
+
+<!-- START -->
+    <switch shell="hidden" interruptible="false">
+        <title>关闭/开启显示实时网速</title>
+        <desc>关闭状态为关闭显示实时网速</desc>
+        <get>settings get system status_bar_show_network_speed</get>
+        <set>settings put system status_bar_show_network_speed $state</set>
+    </switch>
+<!-- END -->
+<!-- START -->
+    <switch shell="hidden" interruptible="false">
+        <title>关闭/开启时间显秒</title>
+        <desc>关闭状态为关闭时间显秒</desc>
+        <get>settings get secure clock_seconds</get>
+        <set>settings put secure clock_seconds $state</set>
+    </switch>
+<!-- END -->
+<!-- START -->
+    <switch shell="hidden" auto-off="true" interruptible="false">
+        <title>深色模式</title>
+        <desc>如果您的设备系统没有深色模式开关，可以在这里开启</desc>
+        <get>. ./switchs/Dark_Mode_Get.sh</get>
+        <set>. ./switchs/Dark_Mode_Set.sh</set>
+    </switch>
+<!-- END -->
+<!-- START -->
+    <switch shell="hidden" auto-off="true" interruptible="false">
+        <title>高对比度文字</title>
+        <get>settings get secure high_text_contrast_enabled</get>
+        <set>settings put secure high_text_contrast_enabled $state</set>
+    </switch>
+<!-- END -->
+<!-- START -->
+    <switch shell="hidden" auto-off="true" interruptible="false">
+        <title>颜色反转</title>
+        <get>settings get secure accessibility_display_inversion_enabled</get>
+        <set>settings put secure accessibility_display_inversion_enabled $state</set>
+    </switch>
+<!-- END -->
+
+
+<!-- START -->
+    <action auto-off="true" interruptible="false">
+        <title>虚拟键布局调整</title>
+        <desc>此命令需测试，已知MIUI系统无用，具体自测</desc>
+        <set>. ./Virtual_Key_Layout_Adjustment.sh</set>
+        <params>
+            <param name="Layout" title="请选择布局风格：" options-sh="echo -e '0|恢复默认\n1|返回 主页 后台（菜单）\n2|后台（菜单） 主页 返回\n3|移除设置'" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action auto-off="true" confirm="true" interruptible="false" visible="[[ $SDK -ge 31 ]] &amp;&amp; echo 1">
+        <title>安卓12添加WiFi与流量快捷开关</title>
+        <set>settings put global settings_provider_model false; settings put secure sysui_qs_tiles “wifi,cell,$(settings get secure sysui_qs_tiles)”</set>
+    </action>
+<!-- END -->
+
+
+<!-- START -->
+    <action interruptible="false" shell="hidden">
+        <title>修改状态栏网速刷新频率（单位：毫秒）</title>
+        <desc>1秒=1000毫秒，需要开启显示实时网速</desc>
+        <set>settings put system status_bar_network_speed_interval $network_speed_interval</set>
+            <param name="network_speed_interval" type="int" value-sh="settings get system status_bar_network_speed_interval" required="true"/>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action auto-off="true">
+        <title>开启电量百分比显示</title>
+        <set>. ./Percentage_open.sh</set>
+        <params>
+            <param name="battery" label="开启电量百分比" type="switch" />
+        </params>
+    </action>
+<!-- END -->
+
+<!-- START -->
+    <action auto-off="true" interruptible="false">
+        <title>色盲模式调节（模拟颜色空间）</title>
+        <set>. ./Color_blind_mode_Option_Set.sh</set>
+        <params>
+            <param name="Color" options-sh="printf 'Default|停用（恢复默认）\n0|全色盲（黑白模式）\n1|红色弱视（红绿不分）\n2|绿色弱视（红绿不分）\n3|蓝色弱视（蓝黄不分）'" value-sh="cat $Data_Dir/Color_blind_mode_Option.log"/>
+        </params>
+    </action>
+<!-- END -->
+</group>

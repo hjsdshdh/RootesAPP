@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resource dir="file:///android_asset/Configuration_File" />
+<resource dir="file:///android_asset/samples" />
+<resource dir="file:///android_asset/usr/pages/display" />
+<group>
+
+<!-- START -->
+    <action>
+        <title>zip/apk/xapk/apks文件对比</title>
+        <set>. ./Comparison_of_Documents.sh</set>
+        <params>
+            <param name="File0" type="file" editable="true" required="true" title="可输入原文件绝对路径，也可以使用文件选择器选择文件" />
+            <param name="File1" type="file" editable="true" required="true" title="可输入要对比的文件绝对路径，也可以使用文件选择器选择文件" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action>
+        <title>查看/解压/打包.db/.sql文件</title>
+        <set>. ./db.sh</set>
+        <params>
+            <param name="Option" options-sh="printf 'Check|查看\noutput|解压成.sql文本格式\npack|打包.sql文件为.db'" />
+            <param name="File" type="file" editable="true" title="可输入.sql/.db文件绝对路径，也可以使用文件选择器选择文件" required="true"/>
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action>
+        <title>压缩文件</title>
+        <desc>压缩文件为gzip xz lzma bzip2 lz4 lz4_legacy lz4_lg格式</desc>
+        <set>cd `dirname &#34;$File&#34;` &#38;&#38; magiskboot compress=$Option &#34;$File&#34; 2>&#38;1</set>
+        <params>
+            <param name="Option" options-sh="printf 'gzip\nxz\nlzma\nbzip2\nlz4\nlz4_legacy\nlz4_lg'" required="true"/>
+            <param name="File" type="file" editable="true" title="可输入文件绝对路径，也可以使用文件选择器选择文件" required="true"/>
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action>
+        <title>解压文件</title>
+        <desc>解压gzip xz lzma bzip2 lz4 lz4_legacy lz4_lg格式文件</desc>
+        <set>cd `dirname &#34;$File&#34;` &#38;&#38; magiskboot decompress &#34;$File&#34; 2>&#38;1</set>
+        <params>
+            <param name="File" type="file" editable="true" title="可输入文件绝对路径，也可以使用文件选择器选择文件" required="true"/>
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action interruptible="false">
+        <title>保护/解除指定文件/文件夹</title>
+        <set>. ./Protection.sh</set>
+        <params>
+            <param name="Subdirectory" label="应用到子目录" type="checkbox" value="1" />
+            <param name="Option" desc="注意：当选择方案②时如果在被保护的目录下新建了目录则需要重新保护，否则无法对新建的目录生效" options-sh="printf '1|无法添加/删除\n2|只允许添加无法删除\n0|解除/恢复默认'" />
+            <param name="File_Dir" title="输入文件/文件夹路径，输入多个请用回车键换行（支持通配符*和?）" />
+            <param name="File_Dir2" type="folder" title="使用文件选择器选择文件，可长按选择目录" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action>
+        <title>查找文件类型</title>
+        <desc>查找文件类型，比如apk zip</desc>         
+        <param name="CMD" title="输入文件后面的名称" required="true" />
+        
+        <param name="LU" title="可输入目录绝对路径，也可以通过文件选择器长按选定目录" desc="温馨提示：可用「MT管理器」长按目录或文件 -->点属性 -->点击目录即可复制目录绝对路径，长按目录或长按名称即可复制文件绝对路径" type="folder" editable="true" required="true" />
+        <set>find $LU -name "*."$CMD</set>
+    </action>
+<!-- END -->
+</group>
+<group>
+<!-- START -->
+    <action>
+        <title>清理空文件、空目录、应用Cache目录</title>
+        <set>. ./Delete_empty_directory_and_empty_file.sh</set>
+        <params>
+            <param name="Empty_Dir" label="清理空目录" type="checkbox" value="1" />
+            <param name="Empty_File" label="清理空文件" type="checkbox" value="1" />
+            <param name="Clean_cache" label="清理所有应用缓存目录" type="checkbox" value="1" />
+            <param name="Clean" title="可输入目录绝对路径，也可以通过文件选择器长按选定目录" type="folder" editable="true" required="true" value-sh="echo $SD_PATH" />
+        </params>
+    </action>
+    
+<!-- END -->
+<!-- START -->
+    <action>
+        <title>查找文件类型并删除</title>
+        <desc>查找文件类型并删除，比如apk zip</desc>         
+        <param name="CMD" title="输入文件后面的名称" required="true" />
+        
+        <param name="LU" title="可输入目录绝对路径，也可以通过文件选择器长按选定目录" desc="温馨提示：可用「MT管理器」长按目录或文件 -->点属性 -->点击目录即可复制目录绝对路径，长按目录或长按名称即可复制文件绝对路径" type="folder" editable="true" required="true" />
+        <set>find $LU -name "*."$CMD -exec rm -f {} \;</set>
+    </action>
+<!-- END -->
+</group>

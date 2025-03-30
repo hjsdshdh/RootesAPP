@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="scope">
+        <item>android</item>
+        <item>com.android.systemui</item>
+        <item>com.google.android.webview</item>
+        <item>com.tencent.mm</item>
+        <item>com.xiaomi.vipaccount</item>
+        <item>com.android.phone</item>
+        <item>com.coolapk.market</item>
+    </string-array>
+</resources>

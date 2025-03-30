@@ -1,0 +1,5 @@
+# ninja log v5
+1	3058	747074935	CMakeFiles/frameinfo.dir/FrameInfo.cpp.o	12aa0d471bdae7b3
+73	3079	747074935	CMakeFiles/native-lib.dir/native-lib.cpp.o	dc5f5de6d89b1df4
+3068	3580	747074935	D:/rootes-main (2)/rootes-main/app/build/intermediates/cmake/debug/obj/x86_64/libframeinfo.so	6d65d633dade5b07
+3581	3876	747074936	D:/rootes-main (2)/rootes-main/app/build/intermediates/cmake/debug/obj/x86_64/libnative-lib.so	5dcaa6bd267762bc

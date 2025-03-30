@@ -1,0 +1,5 @@
+cd /system/bin
+./magisk --install-module "$@"  >/dev/null 2>&1
+
+cd /system/xbin
+./magisk --install-module "$@"  >/dev/null 2>&1

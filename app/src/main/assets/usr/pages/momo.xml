@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<group>
+        <page html="https://kepcry.github.io/hide/" title="用到的文件都会在这里提供，点击前往">
+        </page>
+</group>
+
+<group>
+    <text><title>作者信息</title>
+    <desc>本页面由QQ1470636547编写</desc>
+    </text>
+</group>
+
+<group>
+    <text><title>说明</title>
+    <desc>看完这里再开始
+1.selinux需要确认你的系统是否官方，也需要你自己安装一个救砖模块方式砖机
+2.TEE损坏隐藏不了，使用lsp模块那是毫无意义的事情，不要尝试这么愚蠢的做法
+3.我非常建议你更新到最新的面具再来看这些，推荐版本为27.0以上
+4.不要逃避检测，想着降级momo版本去自慰，毫无意义
+5.遇到问题可以按照作者信息来找我，我有空会解答，收不收费看情况</desc>
+    </text>
+</group>
+
+ <group>
+        <text>
+            <title>找到Magisk
+找到被Magisk模块修改的文件
+找到su进程
+找到可执行程序"su"</title>
+            <desc>打开面具模块列表即可查看shamiko的运行状态，关注后面的黑/白名单字眼
+黑名单(blackmode)请去面具内的遵循排除列表勾选momo
+白名单(whitemode)请去面具内的遵循排除列表取消勾选momo
+面具-配置排除列表-勾选momo(全选)
+确保Shamiko模块正常工作(笑脸而非红X图标)。
+(是否开了遵守排除列表？关闭后重启即可解决。)
+(Shamiko非笑脸，是红X图标？移除Shamiko模块重启，重装再重启。)
+德尔塔不需要安装shamiko，如果有请卸载他
+德尔塔出现这个问题就查看面具设置内的sulist开关
+sulist开着请点击下面的配置sulist取消勾选momo
+sulist关着请点击下面的配置sulist勾选momo</desc>
+        </text>
+    </group>
+    
+     <group>
+        <text>
+            <title>找到Zygisk
+Zygote被注入
+Zygote行为异常</title>
+            <desc>更新你的Shamiko模块版本
+检查你的lsposed框架是否有模块勾选了momo，lsp模块不要勾选momo
+更新你的Shamiko模块版本
+            </desc>
+        </text>
+    </group>
+    
+     <group>
+        <text>
+            <title>TEE损坏</title>
+            <desc>TEE真实情况请用秘钥认证查看，如果返回带有-10003极有可能是真死，OPPO(包括旗下的产品)的高通机型解锁100%TEE损坏，回锁即可恢复。
+请不要使用bootloaderspoofer这一类的lsp模块来隐藏TEE损坏和bootloader未解锁，这是非常愚蠢的办法，千万不要！
+现在也有通过使用工程包注入伪造tee证书的办法来达到"修复"的效果，具体后面会不会被检测不得而知，但你可以去试试</desc>
+        </text>
+    </group>
+    
+     <group>
+        <text>
+            <title>发现注入代码</title>
+            <desc>更新momo4.3.1</desc>
+        </text>
+    </group>
+    
+     <group>
+        <text>
+            <title>ART参数异常
+SElinux处于宽容模式
+Seccomp未开启</title>
+            <desc>先确认你的系统是官方系统再使用以下方法，必须是官方系统，否则你尝试隐藏可能会面临变砖等风险，如果不确定，请自己提前准备好救砖模块。
+移除火柴的防格机模块。
+官方GG修改器-修复-(切换到工作，而SeLinux，并重新启动应用程序)，
+(更换使用官方GG修改器，魔改GG自查看作者是否移除了"修复"按钮)。
+排查面具模块，关闭或移除后重启系统，
+排除常住后台自启动需授权root的应用。
+(可尝试安装：开启SELinux.zip 面具模块)
+如果ART参数异常上面的方法没用的话请尝试更新你的lsposed框架或者卸载来排除问题
+</desc>
+        </text>
+    </group>
+    
+     <group>
+        <text>
+            <title>SElinux规则异常，允许了neverallow条目。</title>
+            <desc>检查是否隐藏selinux宽容之类的模块，有的话请删掉
+可能是官方系统就自带这个，比如部分OPPO、华为等机型，一般不会被检测到，放心就好</desc>
+        </text>
+    </group>
+    
+     <group>
+        <text>
+            <title>数据未加密，挂载参数被修改。</title>
+            <desc>可能是boot又可能是rom，刷回官方解决问题。
+可以通过刷伪装模块解决</desc>
+        </text>
+    </group>
+    
+     <group>
+        <text>
+            <title>找到Xposed框架</title>
+            <desc>使用lsposed
+检查你的lsposed框架是否勾选了momo
+检查你的lsposed版本是不是最新版</desc>
+        </text>
+    </group>
+    
+     <group>
+        <text>
+            <title>找到Riru</title>
+            <desc>更新面具25.2以上版本，使用Zygisk模块。
+23.0面具已是过时产物，放弃使用Riru模块。</desc>
+        </text>
+    </group>
+    
+     <group>
+        <text>
+            <title>init.rc被修改</title>
+            <desc>第三方recovery引起的问题，
+更换其他的三方rec或刷回官方rec。
+(或者安装：隐藏init.rc被发现.zip 面具模块)</desc>
+        </text>
+    </group>
+    
+     <group>
+        <text>
+            <title>分区挂载异常</title>
+            <desc>SYSTEM分区被解锁，可能与boot修补magisk时保留了(AVB2.0/dm-verity)有关。
+如果你是特定机型请不要尝试解决，比如红米K20Pro、小米9等机型，这是系统问题，无法解决</desc>
+        </text>
+    </group>
+    
+     <group>
+        <text>
+            <title>包管理服务异常</title>
+            <desc>卸载或关闭与核心破解类似的软件</desc>
+        </text>
+    </group>
+    
+     <group>
+        <text>
+            <title>权限系统异常</title>
+            <desc>卸载或关闭与核心破解类似的软件
+卸载 幸运破解器
+卸载 Fake Location</desc>
+        </text>
+    </group>
+    
+     <group>
+        <text>
+            <title>处于调试环境/已开启调试模式</title>
+            <desc>关闭开发者选项</desc>
+        </text>
+    </group>
+    
+     <group>
+        <text>
+            <title>存在Magisk或TWRP特定文件</title>
+            <desc>删除以下文件夹：
+/sdcard/TWRP
+/sdcard/Fox
+/data/media/TWRP</desc>
+        </text>
+    </group>
+    
+     <group>
+        <text>
+            <title>非SDK接口的限制失效</title>
+            <desc>卸载Fake Location
+使用特定模块去除痕迹</desc>
+        </text>
+    </group>
+    
+     <group>
+        <text>
+            <title>bootloader未锁定</title>
+            <desc>观看前确认你有救砖模块，这个模块在部分机型/部分面具会出现不开机的情况
+刷入2.4.0_MOD的safetyNet-fix隐藏bootloader
+部分机型和部分阿尔法和官方面具版本需要使用黑名单模式才可以生效
+27001版本的德尔塔无论黑白名单都可以生效</desc>
+        </text>
+    </group>
+
+<group>
+        <text>
+            <title>设备正在运行非原厂系统</title>
+            <desc>一般情况下不建议解决，也没什么影响
+删除/system/addon.d这个文件夹即可，但是会发生什么谁也不知道，三思而后行</desc>
+        </text>
+    </group>
+
+<group>
+        <text>
+            <title>Momo环境损坏/无响应</title>
+            <desc>部分机型无法使用4.4.1版本的MOMO，会出现环境损坏/无响应，这时可以尝试降级到431版本
+还有一种可能就是ruru的数据隔离开启了vold导致的，开启这个后会有一些奇奇怪怪的问题，一般情况下不建议开启
+检查你的模块，magiskhide之类的模块，德尔塔27001自带的magiskhide除外</desc>
+        </text>
+    </group>

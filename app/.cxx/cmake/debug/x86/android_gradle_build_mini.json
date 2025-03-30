@@ -1,0 +1,47 @@
+{
+  "buildFiles": [
+    "D:\\rootes-main (2)\\rootes-main\\app\\src\\main\\cpp\\CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "D:\\sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe",
+      "-C",
+      "D:\\rootes-main (2)\\rootes-main\\app\\.cxx\\cmake\\debug\\x86",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "D:\\sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe",
+    "-C",
+    "D:\\rootes-main (2)\\rootes-main\\app\\.cxx\\cmake\\debug\\x86",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "frameinfo-Debug-x86": {
+      "artifactName": "frameinfo",
+      "buildCommandComponents": [
+        "D:\\sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe",
+        "-C",
+        "D:\\rootes-main (2)\\rootes-main\\app\\.cxx\\cmake\\debug\\x86",
+        "frameinfo"
+      ],
+      "abi": "x86",
+      "output": "D:\\rootes-main (2)\\rootes-main\\app\\build\\intermediates\\cmake\\debug\\obj\\x86\\libframeinfo.so",
+      "runtimeFiles": []
+    },
+    "native-lib-Debug-x86": {
+      "artifactName": "native-lib",
+      "buildCommandComponents": [
+        "D:\\sdk\\cmake\\3.10.2.4988404\\bin\\ninja.exe",
+        "-C",
+        "D:\\rootes-main (2)\\rootes-main\\app\\.cxx\\cmake\\debug\\x86",
+        "native-lib"
+      ],
+      "abi": "x86",
+      "output": "D:\\rootes-main (2)\\rootes-main\\app\\build\\intermediates\\cmake\\debug\\obj\\x86\\libnative-lib.so",
+      "runtimeFiles": [
+        "D:\\rootes-main (2)\\rootes-main\\app\\build\\intermediates\\cmake\\debug\\obj\\x86\\libframeinfo.so"
+      ]
+    }
+  }
+}

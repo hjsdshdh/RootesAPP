@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.root.system.fragments.FragmentHome">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+             <LinearLayout
+                                android:id="@+id/nav_text"
+                                style="@style/ListCardItemClickable"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        style="@style/textTitle"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="仅从官方 GitHub 页面下载 玩机百宝箱。未知来源的文件可能具有恶意行为！" />
+
+                                    <TextView
+                                        style="@style/textSmall"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:text="玩机百宝箱 将保持永久免费，向开发者捐赠以表示支持！" />
+                                </LinearLayout>
+                                </LinearLayout>
+
+
+
+             <LinearLayout
+                                android:id="@+id/nav_text2"
+                                style="@style/ListCardItemClickable"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:enabled="false"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:clickable="false"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        style="@style/textTitle"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="公告" />
+
+                                    <TextView
+                                        style="@style/textSmall"
+                                        android:id="@+id/Service"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:text="正在加载" />
+                                </LinearLayout>
+                                </LinearLayout>
+
+
+            <LinearLayout
+                    android:id="@+id/nav_text3"
+                    style="@style/ListCardItemClickable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:enabled="false"
+                    android:clickable="false"
+                    android:orientation="horizontal">
+
+                <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:clickable="false"
+                        android:orientation="vertical">
+
+                    <TextView
+                            style="@style/textTitle"
+
+                            android:id="@+id/Service2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Connect Server..." />
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+
+            <LinearLayout
+                    android:id="@+id/nav_helpabout"
+                    style="@style/ListCardItemClickable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                    <TextView
+                            style="@style/textTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="查找功能" />
+                </LinearLayout>
+                <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:alpha="0.8"
+                        android:padding="5dp"
+                        android:src="@drawable/kr_arrow"
+                        android:tint="?android:colorAccent"
+                        tools:ignore="UseAppTint"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                                android:id="@+id/nav_otg"
+                                style="@style/ListCardItemClickable"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        style="@style/textTitle"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="OTG功能" />
+
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:alpha="0.8"
+                                    android:padding="5dp"
+                                    android:src="@drawable/kr_arrow"
+                                    android:tint="?android:colorAccent" />
+                            </LinearLayout>
+
+                          <LinearLayout
+                                android:id="@+id/nav_root"
+                                style="@style/ListCardItemClickable"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        style="@style/textTitle"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="Root功能" />
+
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:alpha="0.8"
+                                    android:padding="5dp"
+                                    android:src="@drawable/kr_arrow"
+                                    android:tint="?android:colorAccent" />
+                            </LinearLayout>
+
+                          <LinearLayout
+                                android:id="@+id/nav_magisk"
+                                style="@style/ListCardItemClickable"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        style="@style/textTitle"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="Magisk功能" />
+
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:alpha="0.8"
+                                    android:padding="5dp"
+                                    android:src="@drawable/kr_arrow"
+                                    android:tint="?android:colorAccent" />
+                            </LinearLayout>
+
+                        <LinearLayout
+                                android:id="@+id/nav_system"
+                                style="@style/ListCardItemClickable"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        style="@style/textTitle"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="系统功能" />
+
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:alpha="0.8"
+                                    android:padding="5dp"
+                                    android:src="@drawable/kr_arrow"
+                                    android:tint="?android:colorAccent" />
+                            </LinearLayout>
+
+                             <LinearLayout
+                                android:id="@+id/nav_battery"
+                                style="@style/ListCardItemClickable"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        style="@style/textTitle"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="电池功能" />
+
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:alpha="0.8"
+                                    android:padding="5dp"
+                                    android:src="@drawable/kr_arrow"
+                                    android:tint="?android:colorAccent" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/nav_app"
+                                style="@style/ListCardItemClickable"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        style="@style/textTitle"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="软件功能" />
+                                </LinearLayout>
+
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:alpha="0.8"
+                                    android:padding="5dp"
+                                    android:src="@drawable/kr_arrow"
+                                    android:tint="?android:colorAccent" />
+                            </LinearLayout>
+
+
+        <LinearLayout
+                android:id="@+id/nav_bm"
+                style="@style/ListCardItemClickable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+            <TextView
+                    style="@style/textTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="显示功能" />
+        </LinearLayout>
+            <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:alpha="0.8"
+                    android:padding="5dp"
+                    android:src="@drawable/kr_arrow"
+                    android:tint="?android:colorAccent" />
+        </LinearLayout>
+
+
+
+
+        <LinearLayout
+                android:id="@+id/nav_fq"
+                style="@style/ListCardItemClickable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                <TextView
+                        style="@style/textTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="分区功能" />
+            </LinearLayout>
+            <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:alpha="0.8"
+                    android:padding="5dp"
+                    android:src="@drawable/kr_arrow"
+                    android:tint="?android:colorAccent" />
+        </LinearLayout>
+
+
+            <LinearLayout
+                    android:id="@+id/nav_download"
+                    style="@style/ListCardItemClickable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                    <TextView
+                            style="@style/textTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="资源中心" />
+                </LinearLayout>
+                <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:alpha="0.8"
+                        android:padding="5dp"
+                        android:src="@drawable/kr_arrow"
+                        android:tint="?android:colorAccent" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/nav_data"
+                    style="@style/ListCardItemClickable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+                    <TextView
+                            style="@style/textTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="文件功能" />
+                </LinearLayout>
+                <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:alpha="0.8"
+                        android:padding="5dp"
+                        android:src="@drawable/kr_arrow"
+                        android:tint="?android:colorAccent" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>

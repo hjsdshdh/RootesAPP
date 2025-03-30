@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.root.common.ui.OverScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.root.system.fragments.FragmentHome">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+                android:id="@+id/test"
+                android:clickable="false"
+                style="@style/ListCardItemClickable">
+
+            <TextView
+                    style="@style/textSmall"
+                    android:id="@+id/usernameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_auto_exit_desc" />
+        </LinearLayout>
+
+
+        <LinearLayout
+                android:id="@+id/test2"
+                style="@style/ListCardItemClickable">
+
+            <TextView
+                    style="@style/textSmall"
+                    android:clickable="false"
+                    android:id="@+id/emailTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TEST" />
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/test3"
+                android:clickable="false"
+                style="@style/ListCardItemClickable">
+
+            <TextView
+                    style="@style/textSmall"
+                    android:id="@+id/joinedAtTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_auto_exit_desc" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/pay_wxpay"
+            style="@style/ListCardItemClickable">
+
+            <TextView
+                style="@style/textTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="退出帐户"
+                android:textColor="?android:colorAccent" />
+
+        </LinearLayout>
+
+            <LinearLayout
+                    android:id="@+id/pay_wxpay2"
+                    style="@style/ListCardItemClickable">
+
+                <TextView
+                        style="@style/textTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="赞助我们"
+                        android:textColor="?android:colorAccent" />
+        </LinearLayout>
+
+        </LinearLayout>
+</com.root.common.ui.OverScrollView>

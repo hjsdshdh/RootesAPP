@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+    
+<group>
+  <action>
+        <title>开机动画</title>
+        <desc></desc>
+        <set>
+        cd $GJZS/Module/
+        mkdir system
+        cd system
+        mkdir media
+       mkdir product
+       cd product
+        mkdir media
+        cp "${zip:="$zip2"}" $GJZS/Module/system/product/media/
+        cp "${zip:="$zip2"}" $GJZS/Module/system/media/</set>
+        <params>
+            <param name="zip" type="file" suffix="zip" editable="true" required="true" title="选择开机动画" desc="" />
+        </params>
+    </action>
+</group>
+
+<group>
+  <action>
+        <title>开机自启sh</title>
+        <desc></desc>
+        <set>
+        echo "$sh" > $GJZS/Module/service.sh
+        echo "$sh" > $GJZS/Module/post-fs-data.sh</set>
+        <params>
+             <param name="sh" label="Shell" type="text" desc="输入Shell" />
+        </params>
+    </action>
+</group>
+
+<group>
+  <action>
+        <title>系统应用</title>
+        <desc></desc>
+        <set>
+        mkdir $GJZS/Module/system/app
+        cp "${apk:="$apk2"}" $GJZS/Module/system/app</set>
+        <params>
+            <param name="apk" type="file" suffix="apk" editable="true" required="true" title="选择开机动画" desc="" />
+        </params>
+    </action>
+</group>
+
+<group>
+  <action>
+        <title>打包</title>
+        <desc></desc>
+        <set>
+        cd $GJZS/Module/
+        zip -q -r $GJZS/Module/$CMD.zip *
+        echo 文件在$GJZS/$CMD.zip</set>
+       <params>
+            <param name="CMD" title="打包名称" desc="打包名称" required="true"  />
+        </params>
+    </action>
+</group>

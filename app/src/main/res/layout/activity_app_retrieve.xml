@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        layout="@layout/layout_app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:layout_marginTop="?android:actionBarSize"
+        android:id="@+id/tip"
+        android:paddingHorizontal="@dimen/activity_horizontal_margin"
+        android:paddingVertical="10dp"
+        style="@style/textSmall"
+        android:textColor="@color/colorAccent"
+        android:text="@string/recovery_twrp_data_system_users_0_package_restrictions_xml"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <com.root.common.ui.OverScrollListView
+        android:id="@+id/hidden_app"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tip"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:background="@drawable/list_view_bg" />
+      <!-->  android:divider="@drawable/icon_chart_android" />M<-->
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="40dp"
+        android:layout_marginEnd="35dp"
+        android:contentDescription="TODO"
+        android:src="@drawable/check" />
+
+</RelativeLayout>

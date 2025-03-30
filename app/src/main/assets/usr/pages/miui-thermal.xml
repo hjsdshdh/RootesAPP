@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+    <resource dir="file:///android_asset/usr/pages/thermal_conf3" />
+    <group>
+     <action interruptible="false">
+        <title>Uperf Game Turbo</title>
+        <desc></desc>
+        <set>cp /data/user/0/com.root.system/files/usr/xbin/far.zip $GJZS/
+        mv $GJZS/far.zip $GJZS/UperfGameTurbo.zip
+        echo 已经下载到$GJZS</set>
+    </action>
+    
+     <action interruptible="false">
+        <title>Dfps</title>
+        <desc></desc>
+        <set>cp /data/user/0/com.root.system/files/usr/xbin/far2.zip $GJZS/
+        mv $GJZS/far2.zip $GJZS/Dfps.zip
+        echo 已经下载到$GJZS</set>
+    </action>
+    
+         <action interruptible="false">
+        <title>fas-rs</title>
+        <desc></desc>
+        <set>cp /data/user/0/com.root.system/files/usr/xbin/fas-rs.zip $GJZS/
+        echo 已经下载到$GJZS</set>
+    </action>
+    
+         <action interruptible="false">
+        <title>旁电充电</title>
+        <desc></desc>
+        <set>cp /data/user/0/com.root.system/files/usr/xbin/module.zip $GJZS/
+        mv $GJZS/module.zip $GJZS/旁电充电.zip
+        echo 已经下载到$GJZS</set>
+    </action>
+    </group>

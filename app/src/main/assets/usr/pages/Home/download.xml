@@ -1,0 +1,26 @@
+cat <<Han
+
+<?xml version="1.0" encoding="utf-8"?>
+<resource dir="file:///android_asset/Configuration_File" />
+<resource dir="file:///android_asset/samples" />
+<resource dir="file:///android_asset/usr/pages/display" />
+
+
+<group title="温馨提示:如果不会刷机可以找我们~">
+    <text>
+        <desc>上传模块将模块发到1850684356@qq.com</desc>
+    </text>
+</group>
+<group>
+    <page html="https://rootes.top/api/Magisk.html" >
+        <title>Magisk仓库</title>
+    </page>
+    
+        <page html="https://rootes.top/api/lspoesd.html" >
+        <title>应用商店</title>
+    </page>
+            
+</group>
+         
+
+Han

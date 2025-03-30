@@ -1,0 +1,1 @@
+cat /data/data/com.root.system/分区名称.txt

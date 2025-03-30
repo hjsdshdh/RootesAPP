@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<group title="杂项">
+<!-- START -->
+    <page html="https://www.testufo.com/">
+        <title>屏幕刷新率检测</title>
+    </page>
+<!-- END -->
+<!-- START -->
+    <page html="http://nstool.netease.com/" >
+        <title>网易DNS检测</title>
+    </page>
+<!-- END -->
+            <page title="隐藏环境教程" config="/data/data/com.root.system/files/usr/pages/momo.xml" />
+
+<!-- START -->
+    <page html="https://ipapi.co/json" >
+        <title>查看IP信息</title>
+    </page>
+<!-- END -->
+<!-- START -->
+    <page html="http://speedtest.im/">
+        <title>网速检测</title>
+    </page>
+<!-- END -->
+<!-- START -->
+    
+    
+        <action interruptible="false" id="qqsn">
+        <title>打开QQ私聊</title>
+        <set>am start -n com.tencent.mobileqq/.activity.SplashActivity \
+--ez open_chatfragment true \
+--ei uintype 0 \
+--es uin $qqh</set>
+        <params>
+                    <param name="qqh" label="输入QQ号"/>
+                    </params>
+    </action>
+    
+<!-- END -->
+<!-- START -->
+        <action interruptible="false" id="qqq">
+        <title>打开QQ群</title>
+        <set>
+        am start -n com.tencent.mobileqq/.activity.SplashActivity \
+--ez open_chatfragment true \
+--ei uintype 1 \
+--es uin $qqq</set>
+        <params>
+                            <param name="qqh" label="输入QQ群"/>
+        </params>
+    </action>
+    
+    
+    
+<!-- END -->
+<!-- START -->
+    <action auto-off="true" interruptible="false" id="wxhy">
+        <title>添加微信好友</title>
+        <desc></desc>
+        <set>
+am start -n com.tencent.mm/com.tencent.mm.ui.chatting.ChattingUI --ei Chat_Mode 1 --es Chat_User $CMD</set>
+           <params>
+            <param name="CMD" title="输入微信号" desc="微信号"/>
+        </params>
+    </action>
+    
+<!-- END -->
+<!-- START -->
+        <action interruptible="false" id="qqweb">
+        <title>打开指定网站（使用QQ）</title>
+        <set>am start -n com.tencent.mobileqq/.activity.QQBrowserActivity --es url $web</set>
+        <params>
+                            <param name="web" label="输入网站"/>
+        </params>
+    </action>
+    
+<!-- END -->
+<!-- START -->
+    
+        <action interruptible="false" id="wxweb">
+        <title>打开指定网站（使用微信）</title>
+        <set>am start -n com.tencent.mm/com.tencent.mm.plugin.webview.ui.tools.WebViewUI -d $web</set>
+        <params>
+                            <param name="web" label="输入网站"/>
+        </params>
+    </action>
+    
+<!-- END -->
+<!-- START -->
+            <action interruptible="false" id="zfbweb">
+        <title>打开指定网站（使用支付宝）</title>
+        <set>am start -n com.eg.android.AlipayGphone/com.alipay.mobile.nebulacore.ui.H5Activity --es url $web</set>
+        <params>
+                            <param name="web" label="输入网站"/>
+        </params>
+    </action>
+<!-- END -->
+
+<!-- START -->
+    <action interruptible="false" id="qqyy">
+        <title>打开QQ视频通话</title>
+        <set>am start "intent:#Intent;component=com.tencent.mobileqq/com.tencent.av.ui.AVActivity;B.isFriend=true;i.uinType=0;i.sessionType=2;S.uin=$web;end"</set>
+        <params>
+                            <param name="web" label="输入QQ号"/>
+        </params>
+    </action>
+    
+<!-- END -->
+<!-- START -->
+        <action interruptible="false" id="qqsb">
+        <title>打开QQ语音通话</title>
+        <set>am start "intent:#Intent;component=com.tencent.mobileqq/com.tencent.av.ui.AVActivity;B.isFriend=true;i.uinType=0;i.sessionType=2;S.uin=$web;end"</set>
+        <params>
+                            <param name="web" label="输入QQ号"/>
+        </params>
+    </action>
+    
+
+<!-- END -->
+<!-- START -->
+    <action visible="false">
+        <title>对BDUSS干坏事</title>
+        <set>echo "正在削除BDUSS"; curl -s -o /dev/null -H "Cookie: $Input" https://passport.baidu.com/?logout; echo "BDUSS已虚无"</set>
+        <params>
+            <param name="Input" placeholder="想要对哪个BDUSS干坏事" editable="true" required="true" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action interruptible="false">
+        <title>zip/apk签名</title>
+        <desc>对zip文件和apk文件签名</desc>
+        <set>. ./Zipsigner.sh</set>
+        <params>
+            <param name="File" type="file" suffix="apk" editable="true" title="可输入apk文件绝对路径，也可以使用文件选择器选择文件" />
+            <param name="File2" type="file" suffix="zip" editable="true" title="可输入zip文件绝对路径，也可以使用文件选择器选择文件" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action interruptible="false">
+        <title>时间戳转换</title>
+        <set>date -d @$sj '+%F %H:%M:%S'</set>
+        <params>
+            <param name="sj" type="int" placeholder="输入时间戳" />
+            <param name="a" label="当前时间戳" value-sh="date '+%s'" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action interruptible="false">
+        <title>提取Shortcuts（长按快捷方式）</title>
+        <desc>提取为可执行的shell命令脚本，脚本来源于1群里的by 依心所言</desc>
+        <set>. ./Extract_Shortcuts.sh</set>
+        <params>
+            <param name="ee" title="文件默认保存目录" value-sh="echo $GJZS" required="true"></param>
+            <param name="Option" options-sh="printf 'Commands|命令版\nintent|intent版\nCustomize|自定义输入应用名称提取'" />
+            <param name="APK" title="注：只有选择方案③自定义添加才会生效" placeholder="请输入你要自定义提取的shortcuts名称"/>
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action interruptible="false">
+        <title>自选添加电池优化白名单（系统应用）</title>
+        <desc>让添加的应用在系统进行打盹的时候不打盹</desc>
+        <set>. ./Add_Battery_Optimization_White_List.sh</set>
+            <param name="package" type="app" multiple="true" options-sh=". ./Get_Package_Name-s.sh" />
+    </action>
+<!-- END -->
+<!-- START -->
+    <action interruptible="false">
+        <title>自选添加电池优化白名单（三方应用）</title>
+        <desc>让添加的应用在系统进行打盹的时候不打盹</desc>
+        <set>. ./Add_Battery_Optimization_White_List.sh</set>
+            <param name="package" type="app" multiple="true" options-sh=". ./Get_Package_Name-3.sh" />
+    </action>
+<!-- END -->
+<!-- START -->
+    <action interruptible="false">
+        <title>电池优化白名单查看 &#38; 取消①</title>
+        <desc>让添加的应用在系统进行打盹的时候一起打盹，从而达到省电效果，注：重启手机会恢复默认，默认不全选</desc>
+        <set>. ./Cancel_the_battery_optimization_whitelist.sh</set>
+            <param name="package" type="app" multiple="true" options-sh="dumpsys deviceidle whitelist | grep 'user,' | sed -r 's/user,(.*),.*/\1/g'" />
+    </action>
+<!-- END -->
+<!-- START -->
+    <action interruptible="false">
+        <title>电池优化白名单查看 &#38; 取消②</title>
+        <desc>让添加的应用在系统进行打盹的时候一起打盹，从而达到省电效果，注：重启手机会恢复默认，默认全选</desc>
+        <set>. ./Cancel_the_battery_optimization_whitelist.sh</set>
+            <param name="package" type="app" multiple="true" options-sh="dumpsys deviceidle whitelist | grep 'user,' | sed -r 's/user,(.*),.*/\1/g'" value-sh="dumpsys deviceidle whitelist | grep 'user,' | sed -r 's/user,(.*),.*/\1/g'" />
+    </action>
+<!-- END -->
+<!-- START -->
+    <action confirm="true">
+        <title>下载Windows解包playload.bin工具</title>
+        <desc>如果你下载的卡刷包里有playload.bin可下载此工具进行解包</desc>
+        <set>. ./Download_payload_dumper.sh</set>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action>
+        <title>手机双清,三清,四清,五清,六清介绍</title>
+        <set>cat $Data_Dir/Flash_Help.log</set>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action interruptible="false">
+        <title>查看安卓版本对应的API(SDK)</title>
+        <set>cat $Data_Dir/Android_API.log</set>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action confirm="true" interruptible="false">
+        <title>一键解除RNDIS和WIFI热点间的路由限制。</title>
+        <set>iptables -D tetherctrl_FORWARD -j DROP</set>
+    </action>
+<!-- END -->
+<!-- START -->
+    <picker interruptible="false" multiple="true" options-sh="cat $Data_Dir/Protection_File_Dir.log">
+        <title>自选方式解除已保护的文件/文件夹</title>
+        <desc>查看已保护的文件/文件夹(没有保护过则显示为空列表)，默认勾选全部，点执行即可恢复</desc>
+        <get>cat $Data_Dir/Protection_File_Dir.log</get>
+        <set>. ./Protection_File_Dir_Recover.sh</set>
+    </picker>
+<!-- END -->
+<!-- START -->
+        <page title="Mindows（实验功能）" config-sh="cat \$Pages/win.sh" />
+        
+        <!-- END -->
+</group>
+
+<group>
+        <text>
+            <title>在寻找其他功能吗？</title>
+            <desc></desc>
+        </text>        
+                <page title="高级重启" config="file:///android_asset/usr/pages/Advanced_Restart.xml" locked="$LOCKED" />
+                <page title="系统界面" config="file:///android_asset/usr/pages/display/display.xml" />
+                    <page title="LSPosed域功能" config="file:///android_asset/usr/pages/LSPosed.xml" />
+    
+    
+                <page title="AOSP专区" config="file:///android_asset/usr/pages/aosp.xml" visible="sh ./support/Check_Ui.sh" />
+            
+            
+            <page title="OriginOS专区" config="file:///android_asset/usr/pages/OriginOS.xml" visible="sh ./support/Check_Ui_originos.sh" />
+            
+            <page title="MIUI专区" config="file:///android_asset/usr/pages/MIUI.xml" visible="sh ./support/Check_Ui_miui.sh" />
+                  
+        <page title="系统场景" activity="am start com.root.system/com.root.system.activities.ActivitySystemScene" />
+           
+          <page title="屏幕检测" activity="am start com.root.system/com.root.system.activities.ActivityTestColor" />
+    
+    </group>
+    

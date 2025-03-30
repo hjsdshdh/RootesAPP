@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<group>
+<!-- START -->
+    <action>
+        <title>准备必要文件</title>
+        <desc>必须</desc>
+        <set>
+        mkdir $GJZS/Module/
+        mkdir $GJZS/Module/META-INF
+        mkdir $GJZS/Module/META-INF/com
+        mkdir $GJZS/Module/META-INF/com/google
+        mkdir $GJZS/Module/META-INF/com/google/android
+        echo "#MAGISK" >$GJZS/Module/META-INF/com/google/android/updater-script
+        echo "echo Power by 玩机百宝箱" > $GJZS/Module/META-INF/com/google/android/update-binary
+echo "id=$id
+name=$name
+version=$version
+versionCode=$versionCode
+author=$author
+description=$description" > $GJZS/Module/module.prop</set>
+        <params>
+        <param name="id" label="id" type="text" desc="输入id(必须是英文或者数字)" />
+        <param name="name" label="名称" type="text" desc="输入名称" />
+        <param name="version" label="版本名称" type="text" desc="输入版本名称" />
+        <param name="versionCode" label="版本代码" type="text" desc="输入版本代码" />
+        <param name="author" label="作者" type="text" desc="输入作者名称" />
+        <param name="description" label="详细介绍" type="text" desc="输入详细介绍" />
+        </params>
+    </action>
+    </group>
+    

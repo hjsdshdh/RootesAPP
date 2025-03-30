@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resource dir="file:///android_asset/Configuration_File" />
+<resource dir="file:///android_asset/samples" />
+<resource dir="file:///android_asset/usr/pages/display" />
+
+<group title="温馨提示">
+    <text>
+        <desc>功能介绍：为AOSP功能打造</desc>
+    </text>
+</group>
+
+<group title="功能">
+
+<!-- START -->
+    <action interruptible="false" visible=". ./support/Check_is_AB_device.sh">
+        <title>切换A/B分区</title>
+        <summary>警告：默认自动重启</summary>
+        <set>. ./Switch_ab_partition.sh</set>
+        <params>
+            <param name="a1" value=". ./Switch_ab_partition.sh -c" readonly="readonly"/>
+        </params>
+    </action>
+    
+    
+<!-- END -->
+<!-- START -->
+    <action interruptible="false" shell="hidden">
+        <title>修改状态栏网速刷新频率（单位：毫秒）</title>
+        <desc>1秒=1000毫秒，需要开启显示实时网速</desc>
+        <set>settings put system status_bar_network_speed_interval $network_speed_interval</set>
+            <param name="network_speed_interval" type="int" value="settings get system status_bar_network_speed_interval" required="true"/>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action auto-off="true">
+        <title>开启电量百分比显示</title>
+        <set>. ./Percentage_open.sh</set>
+        <params>
+            <param name="battery" label="开启电量百分比" type="switch" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action auto-off="true" interruptible="false">
+        <title>去除 x 和 ！（三方定制系统可能无 x 和 !）</title>
+        <desc>去除原生系统的x和!</desc>
+        <set>if [[ $x == 0 ]]; then echo "开始恢复默认"; settings delete global captive_portal_server; sleep 1; else echo "开始去除x和!"; settings put global captive_portal_https_url "https://connect.rom.miui.com/generate_204"; settings put global captive_portal_http_url "http://connect.rom.miui.com/generate_204"; settings put global airplane_mode_on 1; sleep 1; settings put global airplane_mode_on 0; fi</set>
+        <params>
+            <param name="x" options="echo -e '0|恢复默认'\\n'1|去除 x 和 !'" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action auto-off="true" interruptible="false">
+        <title>虚拟键布局调整</title>
+        <desc>此命令需测试，已知MIUI系统无用，具体自测</desc>
+        <set>. ./Virtual_Key_Layout_Adjustment.sh</set>
+        <params>
+            <param name="Layout" title="请选择布局风格：" options="echo -e '0|恢复默认\n1|返回 主页 后台（菜单）\n2|后台（菜单） 主页 返回\n3|移除设置'" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action auto-off="true" confirm="true" interruptible="false" visible="[[ $SDK -ge 31 ]] &amp;&amp; echo 1">
+        <title>安卓12添加WiFi与流量快捷开关</title>
+        <set>settings put global settings_provider_model false; settings put secure sysui_qs_tiles “wifi,cell,$(settings get secure sysui_qs_tiles)”</set>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action interruptible="false" visible="[[ $SDK -ge 29 ]] &amp;&amp; echo 1">
+        <title>强制更换默认桌面</title>
+        <desc>绕过系统的设置限制，强制更换默认桌面应用</desc>
+        <set>. ./Default_Desktop_Set.sh</set>
+            <param name="package" type="app" options=". ./Get_Desktop_APK.sh" value=". ./Default_Desktop.sh" />
+    </action>
+    
+    <!-- END -->
+<!-- START -->
+    <action>
+        <title>清理空文件、空目录、应用Cache目录</title>
+        <set>. ./Delete_empty_directory_and_empty_file.sh</set>
+        <params>
+            <param name="Empty_Dir" label="清理空目录" type="checkbox" value="1" />
+            <param name="Empty_File" label="清理空文件" type="checkbox" value="1" />
+            <param name="Clean_cache" label="清理所有应用缓存目录" type="checkbox" value="1" />
+            <param name="Clean" title="可输入目录绝对路径，也可以通过文件选择器长按选定目录" type="folder" editable="true" required="true" value="echo $SD_PATH" />
+        </params>
+    </action>
+    <!-- END -->
+<!-- START -->
+    
+        <switch>
+            <title>悬浮通知</title>
+            <desc>收到消息时在屏幕顶部显示悬浮通知</desc>
+            <get>settings get global heads_up_notifications_enabled</get>
+            <set>settings put global heads_up_notifications_enabled $state</set>
+        </switch>
+        
+        <!-- END -->
+<!-- START -->
+        
+                <picker multiple="multiple" separator="," >
+            <title>隐藏状态栏图标</title>
+            <desc>设置隐藏的状态栏图标</desc>
+            <options>
+                <option value="mobile">手机信号</option>
+                <option value="volte">VoLTE</option>
+                <option value="airplane">飞行模式</option>
+                <option value="location">定位图标</option>
+                <option value="wifi">WIFI</option>
+                <option value="nfc">NFC</option>
+                <option value="vpn">VPN</option>
+                <option value="bluetooth">蓝牙</option>
+                <option value="volume">音量/静音</option>
+                <option value="zen">勿扰模式</option>
+                <option value="alarm_clock">闹钟</option>
+                <option value="headset">耳机</option>
+                <option value="ime">输入法</option>
+                <option value="battery">电池图标</option>
+                <option value="rotate">屏幕旋转</option>
+                <option value="cast">屏幕捕获(录屏)</option>
+                <option value="su">ROOT权限</option>
+            </options>
+            <get>
+                settings get secure icon_blacklist
+            </get>
+            <set>
+                settings put secure icon_blacklist "$state"
+            </set>
+        </picker>
+    <!-- END -->
+<!-- START -->
+    
+    <action auto-off="false">
+        <title>强制旋转屏幕</title>
+        <set>. ./Rotary_screen.sh</set>
+        <params>
+            <param name="Rotate" options="echo -e '0|恢复默认'\\n'1|90度'\\n'3|270度'\\n'2|180度'" />
+        </params>
+    </action>
+    <!-- END -->
+<!-- START -->
+        <picker>
+            <title>去除！和×</title>
+            <desc>通过更改网络检测服务器，解决状态栏的WIFI、LTE图标一直显示!或X</desc>
+            <summary sh="run network_checker_summary.sh" />
+            <options>
+                <option value="miui">MIUI服务器</option>
+                <option value="google">Google服务器</option>
+                <option value="v2ex">V2EX服务器</option>
+                <option value="disable">禁用网络验证</option>
+                <option value="default">还原默认</option>
+            </options>
+            <get>run network_checker_get.sh</get>
+            <set>run network_checker_set.sh</set>
+        </picker>
+        <picker>
+            <title>切换NTP服务器</title>
+            <desc>如果你的系统能正常同步时间，就没必要更换NTP服务器</desc>
+            <options>
+                <option>pool.ntp.org</option>
+                <option>ntp.ntsc.ac.cn</option>
+                <option>ntp1.aliyun.com</option>
+                <option>cn.pool.ntp.org</option>
+                <option>time.cloudflare.com</option>
+            </options>
+            <get>settings get global ntp_server</get>
+            <set>. ./Modify_The_NTP.sh</set>
+        </picker>
+    <!-- END -->
+<!-- START -->
+        <action interruptible="false" >
+        <title>NTP服务修改</title>
+        <set>. ./Modify_The_NTP.sh</set>
+        <params>
+            <param name="ip" title="输入可用的NTP地址" required="true" />
+            <param name="a" title="当前NTP服务器地址" value="settings get global ntp_server" readonly="readonly"/>
+        </params>
+    </action>
+    
+    <!-- END -->
+<!-- START -->
+    <action interruptible="false">
+        <title>自定义字体大小</title>
+        <set>settings put system font_scale $size</set>
+        <params>
+            <param name="size" required="true" type="number" desc="推荐值08 ~ 1.5"/>
+            <param name="a1" readonly="readonly" value="echo 当前值：`settings get system font_scale`" />
+        </params>
+    </action>
+    <!-- END -->
+<!-- START -->
+    <action confirm="true">
+        <title>监控崩溃与ANR（可查看打开过哪些应用包名）</title>
+        <desc sh="echo -e 监控崩溃与ANR"></desc>
+        <set>am monitor</set>
+    </action>
+<!-- END -->
+</group>
+<group title="系统相关调试">
+<!-- START -->
+    <action interruptible="false">
+        <title>自定义设备ID</title>
+        <desc>一般用于刷机后，恢复之前的设备ID，防止微信数据还原后，需要新手机登录验证。可在上面的关于本机查看当前ID</desc>
+        <set>settings put secure android_id $id</set>
+        <params>
+            <param name="id" required="true" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action interruptible="false">
+        <title>自定义字体大小</title>
+        <set>settings put system font_scale $size</set>
+        <params>
+            <param name="size" required="true" type="number" desc="推荐值08 ~ 1.5"/>
+            <param name="a1" readonly="readonly" value="echo 当前值：`settings get system font_scale`" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action interruptible="false" >
+        <title>NTP服务修改</title>
+        <set>. ./Modify_The_NTP.sh</set>
+        <params>
+            <param name="ip" title="输入可用的NTP地址" required="true" />
+            <param name="a" title="当前NTP服务器地址" value="settings get global ntp_server" readonly="readonly"/>
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action interruptible="false" >
+        <title>屏幕饱和度调整</title>
+        <set>service call SurfaceFlinger 1022 f $Saturation</set>
+        <params>
+            <param name="Saturation" title="输入范围为0.00-2.00，如果想增加35%饱和度，就输入1.35" required="true" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action interruptible="false" visible="[[ $SDK -lt 29 ]] &#38;&#38; echo 1">
+        <title>自定义WiFi，MAC地址</title>
+        <desc>重启手机后会恢复默认</desc>
+        <set>. ./Modify_MAC.sh</set>
+        <params>
+            <param name="MAC" title="输入12位字母或者数字组合地址，不正确的MAC地址会修改失败！" value="08:00:20:0A:8C:6D" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action interruptible="false">
+        <title>隐藏导航栏和状态栏</title>
+        <set>. ./Immersion_style.sh</set>
+        <params>
+            <param name="Immersion_style" title="选择样式" desc="注：隐藏虚拟按键后，底部往上滑可呼出虚拟按键" options="cat ./Immersion_style_Option.sh" />
+            <param name="package" title="要指定的系统应用" type="app" multiple="true" separator="," options=". ./Get_Package_Name-s.sh" />
+            <param name="package3" title="要指定的三方应用" type="app" multiple="true" separator="," options=". ./Get_Package_Name-3.sh" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action>
+        <title>屏幕上下左右边距微调</title>
+        <set>wm overscan $Left,$Up,$Right,$Down</set>
+        <params>
+            <param name="Up" title="请输入你要微调的，［上面］高度，［-］代表相反调整，默认值0为恢复，必须输入数字" value="0" required="true" />
+            <param name="Down" title="请输入你要微调的，［下面］高度，［-］代表相反调整，默认值0为恢复，必须输入数字" value="0" required="true" />
+            <param name="Left" title="请输入你要微调的，［左边］高度，［-］代表相反调整，默认值0为恢复，必须输入数字" value="0" required="true" />
+            <param name="Right" title="请输入你要微调的，［右边］高度，［-］代表相反调整，默认值0为恢复，必须输入数字" value="0" required="true" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action auto-off="true" id="@Electricity_camouflage" reload="@Electricity_camouflage">
+        <title>电量伪装</title>
+        <desc>自定义电量伪装显示百分比数字</desc>
+        <set>. ./Electricity_camouflage.sh</set>
+        <params>
+            <param name="Percentage0" label="勾选这里为恢复默认" desc="当勾选时下方修改会无效" type="checkbox" />
+            <param name="Percentage1" title="限制输入3-100范围的值" type="int" max="100" min="3" required="0" maxlength="3" />
+            <param name="Percentage2" title="你也可以选择滑动方案调整" desc="只有当上方输入框没有填写数值时，滑动修改才会生效！" max="100" min="3" type="seekbar" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action auto-off="true" id="@dpi" reload="@dpi">
+        <title>自定义DPI</title>
+        <desc sh="echo -e &#34;当前设置的DPI值为`wm density|sed 's/Physical density/默认值/; s/Override density/当前值/'`&#34;"></desc>
+        <set>. ./dpi.sh</set>
+        <params>
+            <param name="dpi" title="请输入你要修改的DPI值，留空为恢复默认，为了保险限制为3位数字" type="int" min="220" max="700" maxlength="3"/>
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action auto-off="true">
+        <title>自定义屏幕分辨率</title>
+        <set>. ./Screen_Size.sh</set>
+        <params>
+            <param name="Screen_Size0" label="恢复默认" desc="当勾选时下方修改会无效" type="checkbox" />
+            <param name="Screen_Size_X" title="输入屏幕横向数值" placeholder="例如：1080" type="int" />
+            <param name="Screen_Size_Y" title="输入屏幕竖向数值" placeholder="例如：2400" type="int" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action interruptible="false">
+        <title>解除Android12进程限制</title>
+        <set>/system/bin/device_config put activity_manager max_phantom_processes 2147483647
+        
+/system/bin/device_config set_sync_disabled_for_tests persistent
+echo 解除完成</set>
+    </action>
+    <!-- END -->
+<!-- START -->
+
+    <switch shell="hidden" auto-off="true" interruptible="false">
+        <title>无障碍</title>
+        <get>. ./switchs/root_Get.sh</get>
+        <set>. ./switchs/root_Set.sh</set>
+    </switch>
+    <!-- END -->
+<!-- START -->
+    <action>
+        <title>无障碍列表</title>
+        <set>settings get secure enabled_accessibility_services</set>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action>
+        <title>自定义过渡动画</title>
+        <desc>自定义手机过渡动画速度</desc>
+        <set>. ./Transition_animation.sh</set>
+        <params>
+            <param name="DongHua1" title="窗口动画缩放： 请输入数值" type="number" required="true" value="settings get global window_animation_scale" />
+            <param name="DongHua2" title="过渡动画缩放： 请输入数值" type="number" required="true" value="settings get global transition_animation_scale" />
+            <param name="DongHua3" title="动画程序时长缩放： 请输入数值" type="number" required="true" value="settings get global animator_duration_scale" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action auto-off="true" id="@screen_off_timeout" reload="@screen_off_timeout">
+        <title>自定义自动锁屏时间</title>
+        <desc sh="echo -e 随意修改自动锁屏时间\\n当前自动锁屏时间为`settings get system screen_off_timeout`ms"></desc>
+        <set>settings put system screen_off_timeout $screen_off_timeout</set>
+        <params>
+            <param name="screen_off_timeout" title="请输入你要设置的自动锁屏时间，单位为：ms，1秒=1000ms" type="int" value="settings get system screen_off_timeout" required="true" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action auto-off="true">
+        <title>修改屏幕亮度值</title>
+        <desc sh="echo -n 通过数字值，精准的修改亮度值，当前亮度值为`settings get system screen_brightness`"></desc>
+        <set>. ./screen_brightness.sh</set>
+        <params>
+            <param name="screen_brightness" title="请输入你要设置的屏幕亮度值来更改亮度值！输入限制值范围（0-1000）" max="1000" min="0" type="int" maxlength="4" />
+            <param name="screen_brightness2" title="你也可以选择滑动调整亮度" desc="只有当上方输入框没有填写数值时，滑动修改才会生效！" max="1000" min="0" type="seekbar" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+
+    <switch shell="hidden" auto-off="true" interruptible="false">
+        <title>允许未知来源安装</title>
+        <get>. ./switchs/app_Get.sh</get>
+        <set>. ./switchs/app_Set.sh</set>
+    </switch>
+<!-- END -->
+<!-- START -->
+    <action auto-off="false">
+        <title>强制旋转屏幕</title>
+        <set>. ./Rotary_screen.sh</set>
+        <params>
+            <param name="Rotate" options="echo -e '0|恢复默认'\\n'1|90度'\\n'3|270度'\\n'2|180度'" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <switch shell="hidden" interruptible="false">
+        <title>关闭/开启CPU最高频率</title>
+        <get>[[ `getprop sys.sptm.gover` = true ]] &#38;&#38; echo 1</get>
+        <set>[[ $state = 1 ]] &#38;&#38; setprop sys.sptm.gover true || setprop sys.sptm.gover false</set>
+    </switch>
+<!-- END -->
+<!-- START -->
+
+    <switch shell="hidden" auto-off="true" interruptible="false">
+        <title>电池百分比显示</title>
+        <get>. ./switchs/ba_Get.sh</get>
+        <set>. ./switchs/ba_Set.sh</set>
+    </switch>
+<!-- END -->
+<!-- START -->
+
+    <switch shell="hidden" auto-off="true" interruptible="false">
+        <title>色彩屏幕</title>
+        <get>. ./switchs/Rot_Get.sh</get>
+        <set>. ./switchs/Rot_Set.sh</set>
+    </switch>
+
+<!-- END -->
+<!-- START -->
+        <page activity="am start-activity com.android.systemui/com.android.systemui.DemoMode">
+            <title>系统界面开发工具</title>
+            <desc>系统界面开发工具</desc>
+        </page>
+        <!-- END -->
+<!-- START -->
+        
+    <switch shell="hidden" auto-off="true" interruptible="false">
+        <title>自由窗口</title>
+        <get>. ./switchs/windows_Get.sh</get>
+        <set>. ./switchs/windows_Set.sh</set>
+    </switch>
+<!-- END -->
+<!-- START -->
+
+    <switch shell="hidden" auto-off="true" interruptible="false">
+        <title>显示24小时（一分钟生效）</title>
+        <get>. ./switchs/Sleep_Get.sh</get>
+        <set>. ./switchs/Sleep_Set.sh</set>
+    </switch>
+<!-- END -->
+<!-- START -->
+
+    <switch shell="hidden" interruptible="false">
+        <title>临时关闭/开启SELinux</title>
+        <get>[[ `getenforce` = Enforcing ]] &#38;&#38; echo 1</get>
+        <set>setenforce $state</set>
+    </switch>
+<!-- END -->
+<!-- START -->
+    <switch shell="hidden" auto-off="true" interruptible="false">
+        <title>关闭/开启安卓Doze</title>
+        <get>. ./switchs/Doze_Status_Get.sh</get>
+        <set>. ./switchs/Doze_Status_Set.sh</set>
+    </switch>
+<!-- END -->
+<!-- START -->
+    <switch shell="hidden" auto-off="true" interruptible="false" visible="[[ $SDK -ge 28 ]] &#38;&#38; echo 1">
+        <title>开启屏幕旋转按钮</title>
+        <desc>开启 Android 9 以上设备屏幕左下角的旋转图标</desc>
+        <get>[[ `settings get secure show_rotation_suggestions` = 0 ]] || echo 1</get>
+        <set>settings put secure show_rotation_suggestions $state</set>
+    </switch>
+<!-- END -->
+<!-- START -->
+    <switch shell="hidden" auto-off="true" interruptible="false" visible="[[ $SDK -ge 29 ]] &#38;&#38; echo 1">
+        <title>允许隐藏桌面图标</title>
+        <desc>Android 10 以上不再允许隐藏桌面图标，开启以允许</desc>
+        <get>settings get global show_hidden_icon_apps_enabled</get>
+        <set>settings put global show_hidden_icon_apps_enabled $state</set>
+    </switch>
+    
+    <!-- END -->
+<!-- START -->
+    <switch shell="hidden" auto-off="true" interruptible="false">
+        <title>Pixel floating</title>
+        <get>. ./switchs/Google_Get.sh</get>
+        <set>. ./switchs/Google_Set.sh</set>
+    </switch>
+    
+    <!-- END -->
+<!-- START -->
+    <action auto-off="true" interruptible="false">
+        <title>去除 x 和 ！（三方定制系统可能无 x 和 !）</title>
+        <desc>去除原生系统的x和!</desc>
+        <set>if [[ $x == 0 ]]; then echo "开始恢复默认"; settings delete global captive_portal_server; sleep 1; else echo "开始去除x和!"; settings put global captive_portal_https_url "https://connect.rom.miui.com/generate_204"; settings put global captive_portal_http_url "http://connect.rom.miui.com/generate_204"; settings put global airplane_mode_on 1; sleep 1; settings put global airplane_mode_on 0; fi</set>
+        <params>
+            <param name="x" options="echo -e '0|恢复默认'\\n'1|去除 x 和 !'" />
+        </params>
+    </action>
+<!-- END -->
+    </group>
+<group>
+        <text>
+            <title>在寻找其他功能吗？</title>
+            <desc></desc>
+        </text>        
+                <page title="高级重启" config="file:///android_asset/usr/pages/Advanced_Restart.xml" locked="$LOCKED" />
+                <page title="系统界面" config="file:///android_asset/usr/pages/display/display.xml" />
+    
+            <page title="附加功能区" config="file:///android_asset/usr/pages/FuJia.xml" />
+
+        <page title="ROOT专区" config="file:///android_asset/usr/pages/ROOT.xml" locked="$LOCKED"/>
+           
+                   <page title="系统相关查看与调试" config="file:///android_asset/usr/pages/WanJi.xml" />
+        
+        <page title="系统附加功能" activity="am start com.root.system/com.root.system.activities.ActivityAddin" />
+    </group>
+    

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<group>
+<page config-sh="cat /data/user/$ANDROID_UID/$Package_name/files/usr/pages/ksu.xml" title="修补功能" />
+ 
+ </group>

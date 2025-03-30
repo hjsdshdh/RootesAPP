@@ -1,0 +1,5 @@
+ninja: Entering directory `D:\rootes-main (2)\rootes-main\app\.cxx\cmake\debug\arm64-v8a'
+[1/4] Building CXX object CMakeFiles/frameinfo.dir/FrameInfo.cpp.o
+[2/4] Building CXX object CMakeFiles/native-lib.dir/native-lib.cpp.o
+[3/4] Linking CXX shared library "D:\rootes-main (2)\rootes-main\app\build\intermediates\cmake\debug\obj\arm64-v8a\libframeinfo.so"
+[4/4] Linking CXX shared library "D:\rootes-main (2)\rootes-main\app\build\intermediates\cmake\debug\obj\arm64-v8a\libnative-lib.so"

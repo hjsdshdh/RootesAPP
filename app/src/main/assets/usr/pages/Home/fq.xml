@@ -1,0 +1,137 @@
+cat <<Han
+
+<?xml version="1.0" encoding="utf-8"?>
+<resource dir="file:///android_asset/Configuration_File" />
+<resource dir="file:///android_asset/samples" />
+<resource dir="file:///android_asset/usr/pages/display" />
+
+
+<group title="温馨提示">
+    <text>
+        <desc>功能介绍：数据无价</desc>
+    </text>
+</group>
+
+<group title="功能">
+        
+                
+         <page title="SWAP虚拟空间" activity="am start com.root.system/com.root.system.activities.ActivitySwap" />
+        
+        
+            <page title="镜像分区专区" config-sh="cat \$Pages/IMG_Function.xml" locked="$LOCKED" />
+            
+            
+  </group>
+
+
+<group title="挂载分区">
+<!-- START -->
+<action>
+          <title>创建共享文件</title>
+             <params>
+            <param name="test" title="输入你要搜索的功能标题，不区分大小写" required="true" />
+        </params>
+            <set>. ./img/cream.sh</set>
+        </action>
+<!-- END -->
+        <!-- START -->
+        <action>
+        
+            <title>取消挂载共享文件</title>
+            <set>
+            umount -lf /mnt/rootes
+            umount -l /mnt/rootes
+            rm -rf /mnt/rootes/
+            </set>
+        </action>
+        <!-- END -->
+        <!-- START -->
+        <action>
+        
+            <title>挂载共享文件</title>
+            <set>. ./img/mount.sh</set>
+        </action>
+        <!-- END -->
+        <!-- START -->
+          <action warning="可能会丢失共享文件的数据！">
+            <title>修复挂载问题</title>
+             <params>
+      <param name="bug" label="输入文件所在地" value="/data/玩机百宝箱.img" required="true"/>
+        </params>
+            <set>
+     echo 正在修复ext4...
+    mkfs.ext4 /data/玩机百宝箱.img
+    echo 完成
+            </set>
+        </action>
+        <!-- END -->
+        <!-- START -->
+        <action>
+        
+            <title>挂载其他文件（非ext）</title>
+            <params>
+      <param name="test1" label="名称" required="true"/>
+        </params>
+        
+            <param name="test" type="file" suffix="img" editable="true" required="true" title="可输入img文件绝对路径，也可以使用文件选择器选择文件" desc="温馨提示：可用「MT管理器」长按目录或文件 -->点属性 -->点击目录即可复制目录绝对路径，长按目录或长按名称即可复制文件绝对路径" required="true" required="true"/>
+        
+              <param name="Type">
+                <option value="fat32">FAT32</option>
+                <option value="NTFS">NTFS</option>
+            </param>
+            <set>. ./img/mount_$Type.sh</set>
+        </action>
+        
+<!-- END -->
+
+
+        <!-- START -->
+        <action>
+        
+            <title>挂载其他文件（ext）</title>
+            <params>
+      <param name="test1" label="名称" required="true"/>
+        </params>
+        
+            <param name="test" type="file" suffix="img" editable="true" required="true" title="可输入img文件绝对路径，也可以使用文件选择器选择文件" desc="温馨提示：可用「MT管理器」长按目录或文件 -->点属性 -->点击目录即可复制目录绝对路径，长按目录或长按名称即可复制文件绝对路径" required="true" required="true"/>
+        
+              <param name="test2">
+                <option value="ext4">ext4</option>
+                <option value="ext3">ext3</option>
+                <option value="ext4">ext2</option>
+            </param>
+            <set>. ./img/mount_ext.img</set>
+        </action>
+<!-- END -->
+
+
+        <!-- START -->
+        <action>
+        
+            <title>ROM提取分区</title>
+            <params>
+      <param name="test1" label="名称" required="true"/>
+        </params>
+        
+            <param name="test" type="file" suffix="img" editable="true" required="true" title="可输入img文件绝对路径，也可以使用文件选择器选择文件" desc="温馨提示：可用「MT管理器」长按目录或文件 -->点属性 -->点击目录即可复制目录绝对路径，长按目录或长按名称即可复制文件绝对路径" required="true" required="true"/>
+        
+              <param name="test2">
+                <option value="ext4">ext4</option>
+                <option value="ext3">ext3</option>
+                <option value="ext4">ext2</option>
+            </param>
+            <set>. ./img/mount_ext.img</set>
+        </action>
+<!-- END -->
+</group>
+
+<group title="其它">
+<!-- START -->
+    <action interruptible="false">
+        <title>分区介绍</title>
+        <set>cat $Data_Dir/img_Help.log</set>
+    </action>
+<!-- END -->
+</group>
+
+Han

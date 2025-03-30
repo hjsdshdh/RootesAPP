@@ -1,0 +1,4 @@
+D:/rootes-main (2)/rootes-main/app/.cxx/cmake/release/x86/CMakeFiles/frameinfo.dir
+D:/rootes-main (2)/rootes-main/app/.cxx/cmake/release/x86/CMakeFiles/native-lib.dir
+D:/rootes-main (2)/rootes-main/app/.cxx/cmake/release/x86/CMakeFiles/edit_cache.dir
+D:/rootes-main (2)/rootes-main/app/.cxx/cmake/release/x86/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.omarea.common.ui.OverScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:alpha="0.85"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:orientation="vertical">
+
+        <!-- 正式版 -->
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_height="65dp"
+            android:background="@drawable/krscript_item_ripple"
+            android:id="@+id/power_about"
+            style="@style/ListCardItemSmall"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/textTitle"
+                    android:layout_marginBottom="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="关于" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Beta 版本 -->
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_height="65dp"
+            android:background="@drawable/krscript_item_ripple"
+            android:id="@+id/power_update"
+            style="@style/ListCardItemSmall"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/textTitle"
+                    android:layout_marginBottom="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="更新" />
+
+            </LinearLayout>
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_height="65dp"
+            android:background="@drawable/krscript_item_ripple"
+            android:id="@+id/power_help"
+            style="@style/ListCardItemSmall"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/textTitle"
+                    android:layout_marginBottom="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="帮助" />
+
+            </LinearLayout>
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_height="65dp"
+            android:background="@drawable/krscript_item_ripple"
+            android:id="@+id/power_about1"
+            style="@style/ListCardItemSmall"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/textTitle"
+                    android:layout_marginBottom="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="公告" />
+
+            </LinearLayout>
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_height="65dp"
+            android:background="@drawable/krscript_item_ripple"
+            android:id="@+id/power_wx"
+            style="@style/ListCardItemSmall"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/textTitle"
+                    android:layout_marginBottom="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="赞助" />
+
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_height="65dp"
+            android:background="@drawable/krscript_item_ripple"
+            android:id="@+id/show_about_dialog"
+            style="@style/ListCardItemSmall"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/textTitle"
+                    android:layout_marginBottom="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="界面设置" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+</com.omarea.common.ui.OverScrollView>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<group>
+<!-- START -->
+    <action>
+        <title>修补kernelsu（GKI）</title>
+        <desc>文件在$GJZS/kernelsu，仅支持AnyKernel3解压，否则无法开机</desc>
+        <set>. ./kernelsu.sh</set>
+        <params>
+<param name="img1" type="file" suffix="img" editable="true" required="true" title="" desc="此处选择你的下载的kernelsu包里面的IMG" />
+        </params>
+        <params>
+<param name="img2" type="file" suffix="img" editable="true" required="true" title="" desc="此处选择你的下载的kernelsu中的ko驱动" />
+        </params>
+        <params>
+<param name="img" type="file" suffix="img" editable="true" required="true" title="" desc="此处选择你的原厂boot" />
+        </params>
+    </action>
+    
+    <!-- END -->
+    <text>
+        <slices>
+<slice run="echo 只针对GKI设备，非GKI切勿尝试！！！" size="15" color="#FF0366D6" u="1">警告说明</slice>
+        </slices>
+    </text>
+    <!-- END -->
+<!-- START -->
+    <action>
+        <title>修补kernelsu（非GKI）</title>
+        <desc>文件在$GJZS/kernelsu</desc>
+        <set>. ./kernel_nogki.sh</set>
+        <params>
+<param name="kernel1" type="file" suffix="kernel" editable="true" required="true" title="" desc="此处选择你的下载的kernelsu包，是kernel" />
+        </params>
+        <params>
+<param name="img" type="file" suffix="img" editable="true" required="true" title="" desc="此处选择你的原厂boot" />
+        </params>
+    </action>
+    <!-- END -->
+    <text>
+        <slices>
+<slice run="echo 只针对非GKI设备，已修补过kernel的使用，kernel是你kernel的修补包，没有修补包切勿尝试！！！" size="15" color="#FF0366D6" u="1">警告说明</slice>
+        </slices>
+    </text>
+    
+    <group>
+<!-- START -->
+    <action>
+        <title>gz解包</title>
+        <desc>安装kernel的必要</desc>
+        <set>gzip -d "${gz:="$gz2"}"</set>
+        <params>
+<param name="gz" type="file" suffix="gz" editable="true" required="true" title="" desc="温馨提示：可用「MT管理器」长按目录或文件 -->点属性 -->点击目录即可复制目录绝对路径，长按目录或长按名称即可复制文件绝对路径" />
+        </params>
+    </action>
+    <!-- END -->
+</group>
+<group>
+<!-- START -->
+    <action>
+        <title>修补APatch</title>
+        <desc></desc>
+        <set>. ./AP.sh</set>
+              <params>
+            <param name="CMD" title="超级密匙" desc="超级密匙" required="true"/>
+        </params>
+        <params>
+            <param name="img" type="file" suffix="img" editable="true" required="true" title="" desc="此处选择你的原厂boot" />
+        </params>
+    </action>
+    <!-- END -->
+<!-- START -->
+</group>

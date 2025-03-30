@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resource dir="file:///android_asset/Configuration_File" />
+<resource dir="file:///android_asset/samples" />
+<resource dir="file:///android_asset/usr/pages/display" />
+
+<group>
+
+         <action>
+        <title>安装LSPosed-v1.9.2-7249-Irena-release</title>
+        <set>. ./install_lre.sh</set>
+    </action>
+    
+    
+         <action>
+        <title>安装LSPosed-v1.10.1-7115-zygisk-release（JingMatrix）</title>
+        <set>. ./install_JingMatrix.sh</set>
+    </action>
+</group>

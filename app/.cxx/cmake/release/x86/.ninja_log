@@ -1,0 +1,11 @@
+# ninja log v5
+1	4074	748068289	CMakeFiles/native-lib.dir/native-lib.cpp.o	440e89a834d5e060
+73	4165	748068289	CMakeFiles/frameinfo.dir/FrameInfo.cpp.o	2abfcc9a40519e3e
+4166	4892	748068290	D:/rootes-main (2)/rootes-main/app/build/intermediates/cmake/release/obj/x86/libframeinfo.so	d935abc11d6e6219
+4892	5220	748068290	D:/rootes-main (2)/rootes-main/app/build/intermediates/cmake/release/obj/x86/libnative-lib.so	d766111d2936b0df
+14	2618	752080876	D:/rootes-main (2)/rootes-main/app/build/intermediates/cmake/release/obj/x86/libframeinfo.so	d935abc11d6e6219
+2618	5181	752080878	D:/rootes-main (2)/rootes-main/app/build/intermediates/cmake/release/obj/x86/libnative-lib.so	d766111d2936b0df
+18	2436	752081946	D:/rootes-main (2)/rootes-main/app/build/intermediates/cmake/release/obj/x86/libframeinfo.so	d935abc11d6e6219
+2436	4858	752081949	D:/rootes-main (2)/rootes-main/app/build/intermediates/cmake/release/obj/x86/libnative-lib.so	d766111d2936b0df
+63	25255	756482231	D:/rootes-main (2)/rootes-main/app/build/intermediates/cmake/release/obj/x86/libframeinfo.so	d935abc11d6e6219
+25255	35617	756482241	D:/rootes-main (2)/rootes-main/app/build/intermediates/cmake/release/obj/x86/libnative-lib.so	d766111d2936b0df

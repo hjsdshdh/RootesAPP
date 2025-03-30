@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<group>
+<text>
+        <slices>
+            <slice>如果你的LSPosed版本为V1.6.1及更高，在使用LSPosed模块管理功能后请务必重启手机再打开LSPosed管理器</slice>
+            <slice break="true"></slice>
+            <slice>否则可能导致LSPosed作用域信息丢失并无法打开管理器，原因暂时不明</slice>
+            <slice break="true"></slice>
+            <slice>如果你出现了上述情况，请重启手机，仍无效果执行以下命令rm /data/adb/lspd/config/modules_config.db清空数据库文件并重启</slice>
+        </slices>
+</text>
+</group>
+<group title="作用域修改">
+    <!-- START -->
+    <action interruptible="false">
+        <title>模块作用域添加（支持全选）</title>
+        <desc>批量添加作用域</desc>
+        <set>. ./Add_LSPosed_AppScope.sh</set>
+        <param name="Module_package" title="选择修改模块" type="app" multiple="false" options-sh=". ./Get_LSPosed_Modules.sh" />
+        <param name="APP_List" title="选择添加应用" type="app" multiple="true" options-sh=". ./Get_Package_Name-3.sh" />
+    </action>
+    <!-- END -->
+    <!-- START -->
+    <action interruptible="false">
+        <title>模块作用域清空</title>
+        <desc>快速清空作用域</desc>
+        <set>. ./Clear_LSPosed_AppScope.sh</set>
+        <param name="Module_package" title="选择清空的模块" type="app" multiple="false" options-sh=". ./Get_LSPosed_Modules.sh" />
+    </action>
+    <!-- END -->
+    </group>
+    
+<group>
+        <text>
+            <title>在寻找其他功能吗？</title>
+            <desc></desc>
+        </text>        
+                <page title="高级重启" config="file:///android_asset/usr/pages/Advanced_Restart.xml" locked="$LOCKED" />
+        <page title="应用程序管理专区" activity="am start com.root.system/com.root.system.activities.ActivityApplistions" />
+    
+            <page title="附加功能区" config-sh="file:///android_asset/usr/pages/FuJia.xml" />
+
+        <page title="ROOT专区" config-sh="file:///android_asset/usr/pages/ROOT.xml" locked="$LOCKED"/>
+           
+           <action reload="true" auto-off="true" interruptible="false" shell="hidden" id="lspoesd">
+        <title>启动Lsposed</title>
+        <set>am start "intent:#Intent;action=android.intent.action.MAIN;category=org.lsposed.manager.LAUNCH_MANAGER;package=com.android.shell;component=com.android.shell/.BugreportWarningActivity;end"</set>
+    </action>
+    
+        <page config="file:///android_asset/usr/pages/lspoesd_install.xml" title="安装Lspoesd" />
+    
+    </group>
+    

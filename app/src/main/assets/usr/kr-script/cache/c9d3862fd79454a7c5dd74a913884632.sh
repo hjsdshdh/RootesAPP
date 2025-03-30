@@ -1,0 +1,3 @@
+#Han.GJZS
+
+. ./DEBUG.sh

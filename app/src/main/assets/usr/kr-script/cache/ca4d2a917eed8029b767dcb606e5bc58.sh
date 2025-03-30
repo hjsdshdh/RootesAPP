@@ -1,0 +1,3 @@
+#Han.GJZS
+
+settings get secure accessibility_display_inversion_enabled

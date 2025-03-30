@@ -1,0 +1,652 @@
+<?xml version="1.0" encoding="utf-8"?>
+<group title="系统相关查看">
+<!-- START -->
+
+
+    <action interruptible="false">
+        <title>查看储存空间占用情况</title>
+        <set>. ./Storage_Space.sh</set>
+        <params>
+            <param name="All" label="查看全部" type="checkbox" />
+            <param label="格式单位" name="Unit" >
+                <option value="h">以1KB=1024B格式查看</option>
+                <option value="H">以1KB=1000B格式查看</option>
+                <option value="">以B格式单位查看</option>
+            </param>
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action interruptible="false">
+        <title>查看全部已挂载分区信息</title>
+        <set>if [[ $Log -eq 1 ]]; then mount | tee $GJZS/挂载信息.log; echo "日志已保存到$GJZS/挂载信息.log"; else mount; fi</set>
+        <params>
+            <param name="Log" label="同时保存到内部储存" type="checkbox" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action>
+        <title>查看电池信息</title>
+        <set>. ./Battery_information.sh</set>
+        <params>
+            <param name="Cycle" label="是否刷新充电时的参数" type="checkbox" />
+            <param name="Rate" label="刷新间隔" desc="当上面勾选时必须设置的刷新间隔" value="1" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action>
+        <title>查看已保存的WiFi密码</title>
+        <set>. ./wifi.sh</set>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action>
+        <title>关于本机</title>
+        <desc>查看手机相关参数信息</desc>
+        <set>. ./About_This_Machine.sh</set>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action confirm="true">
+        <title>磁盘测速</title>
+        <desc>使用简单的命令检测磁盘连续读写速度</desc>
+        <set>. ./Disk_test.sh</set>
+    </action>
+    <!-- END -->
+<!-- START -->
+    
+    <action>
+        <title>一键激活指令</title>
+        <set>. ./Activation_Option_Set.sh</set>
+        <params>
+            <param name="APK" title="请选择应用 &amp; 功能：" options-sh="samples/Activation_Option.sh" />
+        </params>
+    </action>
+        
+<!-- END -->
+
+<!-- START -->
+    <action confirm="true">
+        <title>监控崩溃与ANR（可查看打开过哪些应用包名）</title>
+        <desc sh="echo -e 监控崩溃与ANR"></desc>
+        <set>am monitor</set>
+    </action>
+<!-- END -->
+</group>
+<group title="系统相关调试">
+<!-- END -->
+<!-- START -->
+    <action interruptible="false">
+        <title>更新A/B系统</title>
+        <set>. ./abupdate.sh</set>
+        <params>
+                    <param name="OTA_FILE" type="file" suffix="zip" editable="true" title="可输入.sh文件绝对路径，也可以使用文件选择器选择文件" desc="温馨提示：可用「MT管理器」长按目录或文件 --&gt;点属性 --&gt;点击目录即可复制目录绝对路径，长按目录或长按名称即可复制文件绝对路径" required="true"/>
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+        <page title="处理器设置" activity="am start com.root.system/com.root.system.activities.ActivityCpuControl" />
+        <!-- END -->
+<!-- START -->
+    <action>
+        <title>6GHz WIFI</title>
+        <desc>部分手机无法使用</desc>
+        <set>cmd wifi force-country-code enabled US</set>
+    </action>
+<!-- END -->
+<!-- START -->
+    <switch shell="hidden" interruptible="false">
+        <title>关闭/开启时间显秒</title>
+        <desc>关闭状态为关闭时间显秒</desc>
+        <get>settings get secure clock_seconds</get>
+        <set>settings put secure clock_seconds $state</set>
+    </switch>
+<!-- END -->
+<!-- START -->
+    <action interruptible="false">
+        <title>自定义设备ID</title>
+        <desc>一般用于刷机后，恢复之前的设备ID，防止微信数据还原后，需要新手机登录验证。可在上面的关于本机查看当前ID</desc>
+        <set>settings put secure android_id $id</set>
+        <params>
+            <param name="id" required="true" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action interruptible="false">
+        <title>自定义字体大小</title>
+        <set>settings put system font_scale $size</set>
+        <params>
+            <param name="size" required="true" type="number" desc="推荐值08 ~ 1.5"/>
+            <param name="a1" readonly="readonly" value-sh="echo 当前值：`settings get system font_scale`" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action>
+        <title>设置北京时间</title>
+        <set>hwclock --hctosys</set>
+    </action>
+    <!-- END -->
+
+<!-- START -->
+ 
+    <action>
+        <title>设置系统时间</title>
+        <set>date --set="$YEAR-$MONTH-$DAY $HOUR:$MINUTE:$SECOND"</set>
+         <params>
+            <param name="YEAR" title="年" required="true" />
+            <param name="MONTH" title="月" required="true" />
+            <param name="DAY" title="日" required="true" />
+            <param name="HOUR" title="小时" required="true" />
+            <param name="MINUTE" title="分" required="true" />
+            <param name="SECOND" title="秒" required="true" />
+        </params>
+    </action>
+    <!-- END -->
+
+<!-- START -->
+ 
+    <action>
+        <title>创建用户</title>
+        <set>pm create-user $user</set>
+         <params>
+            <param name="user" title="输入User" required="true" />
+        </params>
+    </action>
+    <!-- END -->
+
+ <!-- START -->
+    <action interruptible="false">
+        <title>设置默认浏览器</title>
+        <desc></desc>
+        <set>cmd role add-role-holder android.app.role.BROWSER $package </set>
+            <param name="package" type="app" multiple="true" />
+    </action>
+<!-- END -->
+<!-- START -->
+    <action>
+        <title>查看用户</title>
+        <set>pm list users</set>
+    </action>
+    <!-- END -->
+
+<!-- START -->
+ 
+    <action>
+        <title>删除用户</title>
+        <set>pm remove-user $user</set>
+         <params>
+            <param name="user" title="输入User" required="true" />
+        </params>
+    </action>
+    <!-- END -->
+
+<!-- START -->
+  <action warning="可以使用adb shell am switch-user 0切换回机主">
+        <title>切换机主</title>
+        <set>am switch-user $user</set>
+         <params>
+            <param name="user" title="输入User" required="true" />
+        </params>
+    </action>
+    <!-- END -->
+
+<!-- START -->
+    <action interruptible="false" >
+        <title>NTP服务修改</title>
+        <set>. ./Modify_The_NTP.sh</set>
+        <params>
+            <param name="ip" title="输入可用的NTP地址" required="true" />
+            <param name="a" title="当前NTP服务器地址" value-sh="settings get global ntp_server" readonly="readonly"/>
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action interruptible="false" >
+        <title>屏幕饱和度调整</title>
+        <set>service call SurfaceFlinger 1022 f $Saturation</set>
+        <params>
+            <param name="Saturation" title="输入范围为0.00-2.00，如果想增加35%饱和度，就输入1.35" required="true" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action interruptible="false" visible="[[ $SDK -lt 29 ]] &#38;&#38; echo 1">
+        <title>自定义WiFi，MAC地址</title>
+        <desc>重启手机后会恢复默认</desc>
+        <set>. ./Modify_MAC.sh</set>
+        <params>
+            <param name="MAC" title="输入12位字母或者数字组合地址，不正确的MAC地址会修改失败！" value="08:00:20:0A:8C:6D" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action interruptible="false">
+        <title>隐藏导航栏和状态栏</title>
+        <set>. ./Immersion_style.sh</set>
+        <params>
+            <param name="Immersion_style" title="选择样式" desc="注：隐藏虚拟按键后，底部往上滑可呼出虚拟按键" options-sh="cat ./Immersion_style_Option.sh" />
+            <param name="package" title="要指定的系统应用" type="app" multiple="true" separator="," options-sh=". ./Get_Package_Name-s.sh" />
+            <param name="package3" title="要指定的三方应用" type="app" multiple="true" separator="," options-sh=". ./Get_Package_Name-3.sh" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action>
+        <title>屏幕上下左右边距微调</title>
+        <set>wm overscan $Left,$Up,$Right,$Down</set>
+        <params>
+            <param name="Up" title="请输入你要微调的，［上面］高度，［-］代表相反调整，默认值0为恢复，必须输入数字" value="0" required="true" />
+            <param name="Down" title="请输入你要微调的，［下面］高度，［-］代表相反调整，默认值0为恢复，必须输入数字" value="0" required="true" />
+            <param name="Left" title="请输入你要微调的，［左边］高度，［-］代表相反调整，默认值0为恢复，必须输入数字" value="0" required="true" />
+            <param name="Right" title="请输入你要微调的，［右边］高度，［-］代表相反调整，默认值0为恢复，必须输入数字" value="0" required="true" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action auto-off="true" id="@Electricity_camouflage" reload="@Electricity_camouflage">
+        <title>电量伪装</title>
+        <desc>自定义电量伪装显示百分比数字</desc>
+        <set>. ./Electricity_camouflage.sh</set>
+        <params>
+            <param name="Percentage0" label="勾选这里为恢复默认" desc="当勾选时下方修改会无效" type="checkbox" />
+            <param name="Percentage1" title="限制输入3-100范围的值" type="int" max="100" min="3" required="0" maxlength="3" />
+            <param name="Percentage2" title="你也可以选择滑动方案调整" desc="只有当上方输入框没有填写数值时，滑动修改才会生效！" max="100" min="3" type="seekbar" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action auto-off="true" id="@dpi" reload="@dpi">
+        <title>自定义DPI</title>
+        <desc sh="echo -e &#34;当前设置的DPI值为`wm density|sed 's/Physical density/默认值/; s/Override density/当前值/'`&#34;"></desc>
+        <set>. ./dpi.sh</set>
+        <params>
+            <param name="dpi" title="请输入你要修改的DPI值，留空为恢复默认，为了保险限制为3位数字" type="int" min="220" max="700" maxlength="3"/>
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action auto-off="true">
+        <title>自定义屏幕分辨率</title>
+        <set>. ./Screen_Size.sh</set>
+        <params>
+            <param name="Screen_Size0" label="恢复默认" desc="当勾选时下方修改会无效" type="checkbox" />
+            <param name="Screen_Size_X" title="输入屏幕横向数值" placeholder="例如：1080" type="int" />
+            <param name="Screen_Size_Y" title="输入屏幕竖向数值" placeholder="例如：2400" type="int" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action interruptible="false">
+        <title>解除Android12进程限制</title>
+        <set>/system/bin/device_config put activity_manager max_phantom_processes 2147483647
+        
+/system/bin/device_config set_sync_disabled_for_tests persistent
+echo 解除完成</set>
+    </action>
+    <!-- END -->
+<!-- START -->
+
+    <switch shell="hidden" auto-off="true" interruptible="false">
+        <title>无障碍</title>
+        <get>. ./switchs/root_Get.sh</get>
+        <set>. ./switchs/root_Set.sh</set>
+    </switch>
+    <!-- END -->
+<!-- START -->
+    <action>
+        <title>无障碍列表</title>
+        <set>settings get secure enabled_accessibility_services</set>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action>
+        <title>自定义过渡动画</title>
+        <desc>自定义手机过渡动画速度</desc>
+        <set>. ./Transition_animation.sh</set>
+        <params>
+            <param name="DongHua1" title="窗口动画缩放： 请输入数值" type="number" required="true" value-sh="settings get global window_animation_scale" />
+            <param name="DongHua2" title="过渡动画缩放： 请输入数值" type="number" required="true" value-sh="settings get global transition_animation_scale" />
+            <param name="DongHua3" title="动画程序时长缩放： 请输入数值" type="number" required="true" value-sh="settings get global animator_duration_scale" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action auto-off="true" id="@screen_off_timeout" reload="@screen_off_timeout">
+        <title>自定义自动锁屏时间</title>
+        <desc sh="echo -e 随意修改自动锁屏时间\\n当前自动锁屏时间为`settings get system screen_off_timeout`ms"></desc>
+        <set>settings put system screen_off_timeout $screen_off_timeout</set>
+        <params>
+            <param name="screen_off_timeout" title="请输入你要设置的自动锁屏时间，单位为：ms，1秒=1000ms" type="int" value-sh="settings get system screen_off_timeout" required="true" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action auto-off="true">
+        <title>修改屏幕亮度值</title>
+        <desc sh="echo -n 通过数字值，精准的修改亮度值，当前亮度值为`settings get system screen_brightness`"></desc>
+        <set>. ./screen_brightness.sh</set>
+        <params>
+            <param name="screen_brightness" title="请输入你要设置的屏幕亮度值来更改亮度值！输入限制值范围（0-1000）" max="1000" min="0" type="int" maxlength="4" />
+            <param name="screen_brightness2" title="你也可以选择滑动调整亮度" desc="只有当上方输入框没有填写数值时，滑动修改才会生效！" max="1000" min="0" type="seekbar" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+
+    <switch shell="hidden" auto-off="true" interruptible="false">
+        <title>允许未知来源安装</title>
+        <get>. ./switchs/app_Get.sh</get>
+        <set>. ./switchs/app_Set.sh</set>
+    </switch>
+<!-- END -->
+<!-- START -->
+    <action auto-off="false">
+        <title>强制旋转屏幕</title>
+        <set>. ./Rotary_screen.sh</set>
+        <params>
+            <param name="Rotate" options-sh="echo -e '0|恢复默认'\\n'1|90度'\\n'3|270度'\\n'2|180度'" />
+        </params>
+    </action>
+<!-- END -->
+<!-- START -->
+    <switch shell="hidden" interruptible="false">
+        <title>关闭/开启CPU最高频率</title>
+        <get>[[ `getprop sys.sptm.gover` = true ]] &#38;&#38; echo 1</get>
+        <set>[[ $state = 1 ]] &#38;&#38; setprop sys.sptm.gover true || setprop sys.sptm.gover false</set>
+    </switch>
+<!-- END -->
+<!-- START -->
+
+    <switch shell="hidden" auto-off="true" interruptible="false">
+        <title>禁止状态栏下拉</title>
+        <get>. ./switchs/no_Get.sh</get>
+        <set>. ./switchs/no_Set.sh</set>
+    </switch>
+<!-- END -->
+<!-- START -->
+
+    <switch shell="hidden" auto-off="true" interruptible="false">
+        <title>电池百分比显示</title>
+        <get>. ./switchs/ba_Get.sh</get>
+        <set>. ./switchs/ba_Set.sh</set>
+    </switch>
+<!-- END -->
+<!-- START -->
+
+    <switch shell="hidden" auto-off="true" interruptible="false">
+        <title>色彩屏幕</title>
+        <get>. ./switchs/Rot_Get.sh</get>
+        <set>. ./switchs/Rot_Set.sh</set>
+    </switch>
+    
+    <!-- END -->
+<!-- START -->
+
+    <switch shell="hidden" auto-off="true" interruptible="false">
+        <title>开启/关闭Clash for Android</title>
+        <get>. ./switchs/vpn_Get.sh</get>
+        <set>. ./switchs/vpn_Set.sh</set>
+    </switch>
+<!-- END -->
+<!-- START -->
+
+    <switch shell="hidden" auto-off="true" interruptible="false">
+        <title>显示秒（MIUI/Hyperos不支持）</title>
+        <get>. ./switchs/Sleep2_Get.sh</get>
+        <set>. ./switchs/Sleep2_Set.sh</set>
+    </switch>
+    <!-- END -->
+<!-- START -->
+
+    <switch shell="hidden" auto-off="true" interruptible="false">
+        <title>自由窗口</title>
+        <get>. ./switchs/windows_Get.sh</get>
+        <set>. ./switchs/windows_Set.sh</set>
+    </switch>
+<!-- END -->
+<!-- START -->
+
+    <switch shell="hidden" auto-off="true" interruptible="false">
+        <title>显示24小时（一分钟生效）</title>
+        <get>. ./switchs/Sleep_Get.sh</get>
+        <set>. ./switchs/Sleep_Set.sh</set>
+    </switch>
+<!-- END -->
+<!-- START -->
+
+    <switch shell="hidden" auto-off="true" interruptible="false">
+        <title>Pixel floating</title>
+        <get>. ./switchs/Google_Get.sh</get>
+        <set>. ./switchs/Google_Set.sh</set>
+    </switch>
+<!-- END -->
+<!-- START -->
+
+    <switch shell="hidden" interruptible="false">
+        <title>临时关闭/开启SELinux</title>
+        <get>[[ `getenforce` = Enforcing ]] &#38;&#38; echo 1</get>
+        <set>setenforce $state</set>
+    </switch>
+<!-- END -->
+<!-- START -->
+    <switch shell="hidden" auto-off="true" interruptible="false">
+        <title>关闭/开启安卓Doze</title>
+        <get>. ./switchs/Doze_Status_Get.sh</get>
+        <set>. ./switchs/Doze_Status_Set.sh</set>
+    </switch>
+<!-- END -->
+<!-- START -->
+    <switch shell="hidden" auto-off="true" interruptible="false" visible="[[ $SDK -ge 28 ]] &#38;&#38; echo 1">
+        <title>开启屏幕旋转按钮</title>
+        <desc>开启 Android 9 以上设备屏幕左下角的旋转图标</desc>
+        <get>[[ `settings get secure show_rotation_suggestions` = 0 ]] || echo 1</get>
+        <set>settings put secure show_rotation_suggestions $state</set>
+    </switch>
+<!-- END -->
+<!-- START -->
+    <switch shell="hidden" auto-off="true" interruptible="false" visible="[[ $SDK -ge 29 ]] &#38;&#38; echo 1">
+        <title>允许隐藏桌面图标</title>
+        <desc>Android 10 以上不再允许隐藏桌面图标，开启以允许</desc>
+        <get>settings get global show_hidden_icon_apps_enabled</get>
+        <set>settings put global show_hidden_icon_apps_enabled $state</set>
+    </switch>
+<!-- END -->
+</group>
+<group title="开发者选项">
+<!-- START -->
+    <switch shell="hidden" auto-off="true" interruptible="false">
+        <title>强制将活动设为可调整大小（强制分屏）</title>
+        <get>settings get global force_resizable_activities</get>
+        <set>settings put global force_resizable_activities $state</set>
+    </switch>
+<!-- END -->
+<!-- START -->
+    <switch shell="hidden" auto-off="true" interruptible="false" visible="[[ $SDK -ge 29 ]] &#38;&#38; echo 1">
+        <title>强制启用SmartDark</title>
+        <get>[[ `getprop debug.hwui.force_dark` = true ]] &#38;&#38; echo 1</get>
+        <set>[[ $state = 1 ]] &#38;&#38; setprop debug.hwui.force_dark true || setprop debug.hwui.force_dark false</set>
+    </switch>
+<!-- END -->
+<!-- START -->
+    <switch shell="hidden" auto-off="true" interruptible="false">
+        <title>显示点按操作反馈</title>
+        <get>settings get system show_touches</get>
+        <set>settings put system show_touches $state</set>
+    </switch>
+<!-- END -->
+<!-- START -->
+    <switch shell="hidden" auto-off="true" interruptible="false">
+        <title>显示触摸点坐标</title>
+        <get>settings get system pointer_location</get>
+        <set>settings put system pointer_location $state</set>
+    </switch>
+<!-- END -->
+<!-- START -->
+    <switch shell="hidden" auto-off="true" interruptible="false">
+        <title>USB调试开关</title>
+        <get>settings get global adb_enabled</get>
+        <set>settings put global adb_enabled $state</set>
+    </switch>
+<!-- END -->
+<!-- START -->
+    <switch shell="hidden" auto-off="true" interruptible="false">
+        <title>网速显示</title>
+        <get>. ./switchs/WIFI_Get.sh</get>
+        <set>. ./switchs/WIFI_Set.sh</set>
+    </switch>
+<!-- END -->
+<!-- START -->
+    <switch shell="hidden" auto-off="true" interruptible="false">
+        <title>网络ADB调试</title>
+        <desc sh=". ./Obtain_WiFi_ip.sh"></desc>
+        <get>. ./switchs/Network_ADB_debugging_get.sh</get>
+        <set>. ./switchs/Network_ADB_debugging_set.sh</set>
+    </switch>
+<!-- END -->
+<!-- START -->
+    <switch interruptible="false" visible="[[ $SDK -ge 24 ]] &#38;&#38; echo 1">
+        <title>开启自由窗口模式</title>
+        <get>settings get global enable_freeform_support</get>
+        <set>settings put global enable_freeform_support $state</set>
+    </switch>
+<!-- END -->
+</group>
+<group title="快速进入以下界面">
+<!-- START -->
+    <action auto-off="true" interruptible="false">
+        <title>系统界面调谐器</title>
+        <set>am start com.android.systemui/com.android.systemui.DemoMode</set>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action auto-off="true" interruptible="false">
+        <title>开发者选项</title>
+        <set>am start -a com.android.settings.APPLICATION_DEVELOPMENT_SETTINGS</set>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action auto-off="true" interruptible="false">
+        <title>测试</title>
+        <set>am start com.android.settings/com.android.settings.Settings\$TestingSettingsActivity</set>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action auto-off="true" interruptible="false" visible="[[ -d &#34;$DATA_DIR/com.google.android.gms&#34; ]] &#38;&#38; echo 1 || echo 0">
+        <title>FCM状态</title>
+        <set>am start com.google.android.gms/com.google.android.gms.gcm.GcmDiagnostics</set>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action auto-off="true" interruptible="false">
+        <title>应用内存使用量</title>
+        <set>am start com.android.settings/com.android.settings.Settings\$AppMemoryUsageActivity</set>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action auto-off="true" interruptible="false">
+        <title>显示在其他应用的上层</title>
+        <set>am start com.android.settings/com.android.settings.Settings\$OverlaySettingsActivity</set>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action auto-off="true" interruptible="false">
+        <title>应用使用情况统计</title>
+        <set>am start com.android.settings/com.android.settings.UsageStatsActivity</set>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action auto-off="true" interruptible="false">
+        <title>允许安装应用</title>
+        <set>am start com.android.settings/com.android.settings.Settings\$ManageExternalSourcesActivity</set>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action auto-off="true" interruptible="false">
+        <title>允许修改系统设置</title>
+        <set>am start com.android.settings/com.android.settings.Settings\$WriteSettingsActivity</set>
+    </action>
+<!-- END -->
+<!-- START -->
+    <action auto-off="true" interruptible="false">
+        <title>选择壁纸来源</title>
+        <set>am start com.android.settings/com.android.settings.wallpaper.WallpaperSuggestionActivity</set>
+    </action>
+    <!-- END -->
+<!-- START -->
+    
+    <group title="开发者模式">
+        <!--支持指定activity-->
+        <!-- END -->
+<!-- START -->
+        <page id="dev" activity="com.android.settings.APPLICATION_DEVELOPMENT_SETTINGS">
+            <title>开发者选项</title>
+        </page>
+        
+        <!-- END -->
+<!-- START -->
+    </group>
+
+    <group title="自定义化">
+    <!-- END -->
+<!-- START -->
+        <picker multiple="multiple" separator=",">
+            <title>隐藏状态栏图标</title>
+            <desc>设置隐藏的状态栏图标</desc>
+            <options>
+                <option value="mobile">手机信号</option>
+                <option value="wifi">WIFI</option>
+                <option value="volte">VoLTE</option>
+                <option value="airplane">飞行模式</option>
+                <option value="location">定位图标</option>
+                <option value="nfc">NFC</option>
+                <option value="vpn">VPN</option>
+                <option value="bluetooth">蓝牙</option>
+                <option value="volume">音量/静音</option>
+                <option value="zen">勿扰模式</option>
+                <option value="alarm_clock">闹钟</option>
+                <option value="headset">耳机</option>
+                <option value="ime">输入法</option>
+            </options>
+            <get>
+                settings get secure icon_blacklist
+            </get>
+            <set>
+                settings put secure icon_blacklist "$state"
+            </set>
+        </picker>
+    
+    <!-- END -->
+<!-- START -->
+        <page activity="am start-activity com.android.systemui/com.android.systemui.DemoMode">
+            <title>系统界面开发工具</title>
+            <desc>系统界面开发工具</desc>
+        </page>
+        <!-- END -->
+<!-- START -->
+</group>
+
+<group>
+        <text>
+            <title>在寻找其他功能吗？</title>
+            <desc></desc>
+        </text>        
+                <page title="高级重启" config="file:///android_asset/usr/pages/Advanced_Restart.xml" locked="$LOCKED" />
+                <page title="系统界面" config="file:///android_asset/usr/pages/display/display.xml" />
+                
+                  
+        <page
+            id="otg"
+            config="file:///android_asset/usr/pages/adb_tool/config.xml"
+            desc="此功能建议不要在公共WiFi场合打开" title="无线调试功能">
+        </page>
+        <page title="系统场景" activity="am start com.root.system/com.root.system.activities.ActivitySystemScene" />
+           
+          <page title="屏幕检测" activity="am start com.root.system/com.root.system.activities.ActivityTestColor" />
+    
+    </group>
+    
+
