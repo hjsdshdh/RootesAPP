@@ -39,6 +39,8 @@ jobs:
       # run: ./gradlew build
       run: ./gradlew assembleRelease
 
-    - name: 上传
-      # run: ./gradlew build
-      run: curl -T ${{ github.workspace }}/app/build/outputs/apk/release/*.apk http://ik.gengye.top:5212/dav/玩机百宝箱Beta.apk --user 123456789@qq.com:ag6R6UI9cRuVPAK2rnqwUnmarlIYhD4M
+    - name: Upload GitHub Actions artifact of vcpkg build
+      uses: actions/upload-artifact@v4
+      with:
+        name: Merak-dev
+        path: ${{ github.workspace }}/app/build/outputs/apk/release/*.apk
