@@ -1,5 +1,6 @@
 package com.root.system.units
 
+import com.root.system.models.BatteryStatus
 import com.root.common.shell.KeepShellPublic
 import com.root.common.shell.KernelProrp
 import com.root.common.shell.RootFile
@@ -222,44 +223,42 @@ class BatteryUnit {
      * 获取电池温度
      */
     fun getBatteryTemperature(): BatteryStatus {
-        val batteryInfo = KeepShellPublic.doCmdSync("dumpsys battery")
-        val batteryInfos = batteryInfo.split("\n")
+    val batteryInfo = KeepShellPublic.doCmdSync("dumpsys battery")
+    val batteryInfos = batteryInfo.split("\n")
 
-        // 由于部分手机相同名称的参数重复出现，并且值不同，为了避免这种情况，加个额外处理，同名参数只读一次
-        var levelReaded = false
-        var tempReaded = false
-        var statusReaded = false
-        val batteryStatus = BatteryStatus()
+    val batteryStatus = BatteryStatus() // Ensure BatteryStatus has a no-argument constructor
 
-        for (item in batteryInfos) {
-            val info = item.trim()
-            val index = info.indexOf(":")
-            if (index > Int.MIN_VALUE && index < info.length - 1) {
-                val value = info.substring(info.indexOf(":") + 1).trim()
-                try {
-                    if (info.startsWith("status")) {
-                        if (!statusReaded) {
-                            batteryStatus.statusText = value
-                            statusReaded = true
-                        } else {
-                            continue
-                        }
-                    } else if (info.startsWith("level")) {
-                        if (!levelReaded) {
-                            batteryStatus.level = value.toInt()
-                            levelReaded = true
-                        } else continue
-                    } else if (info.startsWith("temperature")) {
-                        if (!tempReaded) {
-                            tempReaded = true
-                            batteryStatus.temperature = (value.toFloat() / 10.0).toFloat()
-                        } else continue
+
+    // 由于部分手机相同名称的参数重复出现，并且值不同，为了避免这种情况，加个额外处理，同名参数只读一次
+    // Flags to avoid duplicate assignment
+    var levelRead = false
+    var tempRead = false
+    var statusRead = false
+
+    for (item in batteryInfos) {
+        val info = item.trim()
+        val index = info.indexOf(":")
+        if (index > 0 && index < info.length - 1) {
+            val value = info.substring(index + 1).trim()
+            try {
+                when {
+                    info.startsWith("status") && !statusRead -> {
+                        batteryStatus.statusText = value
+                        statusRead = true
                     }
-                } catch (ex: java.lang.Exception) {
-
+                    info.startsWith("level") && !levelRead -> {
+                        batteryStatus.level = value.toInt()
+                        levelRead = true
+                    }
+                    info.startsWith("temperature") && !tempRead -> {
+                        batteryStatus.temperature = value.toFloat() / 10
+                        tempRead = true
+                    }
                 }
+            } catch (ex: Exception) {
+                // Log or handle parsing exceptions if necessary
             }
         }
-        return batteryStatus
     }
+    return batteryStatus
 }
