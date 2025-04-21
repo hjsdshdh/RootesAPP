@@ -69,12 +69,16 @@ task encryptNativeLibs {
             shrinkResources true
             zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-
             minifyEnabled true
             debuggable false
             jniDebuggable = false
-        
            signingConfig signingConfigs.omarea_Signing
+           
+           // 新增
+            buildConfigField "String"， "BUILD_TIME"， "\"${new Date()}\""
+            buildConfigField "String"， "BUILD_HOST"， "\"${System.getenv('HOSTNAME') ?: 'unknown'}\""
+            buildConfigField "String"， "BUILD_PROCESSOR"， "\"${System.getProperty('os.arch')}\""
+            buildConfigField "String"， "BUILD_SYSTEM"， "\"${System.getProperty('os.name')}\""       
         }
         release_mini {
             shrinkResources true
@@ -89,6 +93,12 @@ task encryptNativeLibs {
             minifyEnabled false
             debuggable true
             jniDebuggable = false
+            
+            // 新增
+            buildConfigField "String"， "BUILD_TIME"， "\"${new Date()}\""
+            buildConfigField "String"， "BUILD_HOST"， "\"${System.getenv('HOSTNAME') ?: 'unknown'}\""
+            buildConfigField "String"， "BUILD_PROCESSOR"， "\"${System.getProperty('os.arch')}\""
+            buildConfigField "String"， "BUILD_SYSTEM"， "\"${System.getProperty('os.name')}\""       
         }
     }
     productFlavors {

@@ -16,17 +16,6 @@ class BatteryUnit {
         get() = RootFile.itemExists("/sys/class/power_supply/bms/uevent") || qcSettingSuupport() || bpSettingSuupport() || pdSupported()
 
     //获取电池信息
-    /*else if (info.startsWith("POWER_SUPPLY_TIME_TO_EMPTY_AVG=")) {
-                        stringBuilder.append("平均耗尽 = ");
-                        int val = Integer.parseInt(info.substring(keyrowd.length(), info.length()));
-                        stringBuilder.append(((val / 3600.0) + "    ").substring(0, 4));
-                        stringBuilder.append("小时");
-                    } else if (info.startsWith("POWER_SUPPLY_TIME_TO_FULL_AVG=")) {
-                        stringBuilder.append("平均充满 = ");
-                        int val = Integer.parseInt(info.substring(keyrowd.length(), info.length()));
-                        stringBuilder.append(((val / 3600.0) + "    ").substring(0, 4));
-                        stringBuilder.append("小时");
-                    }*/
     val batteryInfo: String
         get() {
             if (RootFile.fileExists("/sys/class/power_supply/bms/uevent")) {
@@ -125,38 +114,11 @@ class BatteryUnit {
         }
 
     //获取电池容量
-    /*
-            POWER_SUPPLY_NAME=bms
-            POWER_SUPPLY_CAPACITY=30
-            POWER_SUPPLY_CAPACITY_RAW=77
-            POWER_SUPPLY_TEMP=320
-            POWER_SUPPLY_VOLTAGE_NOW=3697500
-            POWER_SUPPLY_VOLTAGE_OCV=3777837
-            POWER_SUPPLY_CURRENT_NOW=440917
-            POWER_SUPPLY_RESISTANCE_ID=58000
-            POWER_SUPPLY_RESISTANCE=200195
-            POWER_SUPPLY_BATTERY_TYPE=sagit_atl
-            POWER_SUPPLY_CHARGE_FULL_DESIGN=3349000
-            POWER_SUPPLY_VOLTAGE_MAX_DESIGN=4400000
-            POWER_SUPPLY_CYCLE_COUNT=69
-            POWER_SUPPLY_CYCLE_COUNT_ID=1
-            POWER_SUPPLY_CHARGE_NOW_RAW=1244723
-            POWER_SUPPLY_CHARGE_NOW=0
-            POWER_SUPPLY_CHARGE_FULL=3272000
-            POWER_SUPPLY_CHARGE_COUNTER=1036650
-            POWER_SUPPLY_TIME_TO_FULL_AVG=26438
-            POWER_SUPPLY_TIME_TO_EMPTY_AVG=30561
-            POWER_SUPPLY_SOC_REPORTING_READY=1
-            POWER_SUPPLY_DEBUG_BATTERY=0
-            POWER_SUPPLY_CONSTANT_CHARGE_VOLTAGE=4389899
-            POWER_SUPPLY_CC_STEP=0
-            POWER_SUPPLY_CC_STEP_SEL=0
-            */ val batteryMAH: String
+    val batteryMAH: String
         get() {
             var path = ""
             if (RootFile.fileExists("/sys/class/power_supply/bms/uevent")) {
                 val batteryInfos = KernelProrp.getProp("/sys/class/power_supply/bms/uevent")
-
                 val arr = batteryInfos.split("\n".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                 val keywords = arrayOf("POWER_SUPPLY_CHARGE_FULL=", "POWER_SUPPLY_CHARGE_FULL_DESIGN=")
                 for (k in keywords.indices) {
@@ -205,7 +167,6 @@ class BatteryUnit {
                 }
             } catch (ignored: Exception) {
             }
-
         } else {
             return "?mA"
         }
