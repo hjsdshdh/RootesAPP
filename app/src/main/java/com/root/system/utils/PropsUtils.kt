@@ -1,6 +1,6 @@
 package com.root.system.utils
 
-import com.omarea.common.shell.KeepShellPublic
+import com.root.common.shell.KeepShellPublic
 
 /**
  * Created by Hello on 2017/8/8.
