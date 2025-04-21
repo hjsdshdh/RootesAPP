@@ -75,10 +75,10 @@ task encryptNativeLibs {
            signingConfig signingConfigs.omarea_Signing
            
            // 新增
-            buildConfigField "String"， "BUILD_TIME"， "\"${new Date()}\""
-            buildConfigField "String"， "BUILD_HOST"， "\"${System.getenv('HOSTNAME') ?: 'unknown'}\""
-            buildConfigField "String"， "BUILD_PROCESSOR"， "\"${System.getProperty('os.arch')}\""
-            buildConfigField "String"， "BUILD_SYSTEM"， "\"${System.getProperty('os.name')}\""       
+            buildConfigField "String", "BUILD_TIME", "\"${new Date()}\""
+            buildConfigField "String", "BUILD_HOST", "\"${System.getenv('HOSTNAME') ?: 'unknown'}\""
+            buildConfigField "String", "BUILD_PROCESSOR", "\"${System.getProperty('os.arch')}\""
+            buildConfigField "String", "BUILD_SYSTEM", "\"${System.getProperty('os.name')}\""       
         }
         release_mini {
             shrinkResources true
@@ -95,10 +95,10 @@ task encryptNativeLibs {
             jniDebuggable = false
             
             // 新增
-            buildConfigField "String"， "BUILD_TIME"， "\"${new Date()}\""
-            buildConfigField "String"， "BUILD_HOST"， "\"${System.getenv('HOSTNAME') ?: 'unknown'}\""
-            buildConfigField "String"， "BUILD_PROCESSOR"， "\"${System.getProperty('os.arch')}\""
-            buildConfigField "String"， "BUILD_SYSTEM"， "\"${System.getProperty('os.name')}\""       
+            buildConfigField "String", "BUILD_TIME", "\"${new Date()}\""
+            buildConfigField "String", "BUILD_HOST", "\"${System.getenv('HOSTNAME') ?: 'unknown'}\""
+            buildConfigField "String", "BUILD_PROCESSOR", "\"${System.getProperty('os.arch')}\""
+            buildConfigField "String", "BUILD_SYSTEM", "\"${System.getProperty('os.name')}\""       
         }
     }
     productFlavors {
