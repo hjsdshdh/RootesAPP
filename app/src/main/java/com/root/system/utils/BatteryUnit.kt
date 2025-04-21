@@ -1,8 +1,8 @@
 package com.root.system.units
 
-import com.omarea.common.shell.KeepShellPublic
-import com.omarea.common.shell.KernelProrp
-import com.omarea.common.shell.RootFile
+import com.root.common.shell.KeepShellPublic
+import com.root.common.shell.KernelProrp
+import com.root.common.shell.RootFile
 import com.root.system.BatteryStatus
 import java.io.File
 

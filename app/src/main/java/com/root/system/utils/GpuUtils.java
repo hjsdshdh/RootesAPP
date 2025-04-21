@@ -1,8 +1,8 @@
 package com.root.system.utils;
 
-import com.omarea.common.shell.KeepShellPublic;
-import com.omarea.common.shell.KernelProrp;
-import com.omarea.common.shell.RootFile;
+import com.root.common.shell.KeepShellPublic;
+import com.root.common.shell.KernelProrp;
+import com.root.common.shell.RootFile;
 import com.root.system.utils.CpuStatus;
 
 import java.io.File;

@@ -2,7 +2,7 @@ package com.root.system.utils;
 
 import android.annotation.SuppressLint;
 
-import com.omarea.common.shell.KernelProrp;
+import com.root.common.shell.KernelProrp;
 
 import java.util.HashMap;
 
