@@ -12,11 +12,11 @@ import java.io.File
  */
 
 class BatteryUnit {
-    //是否兼容此设备
+    // 是否兼容此设备
     val isSupport: Boolean
         get() = RootFile.itemExists("/sys/class/power_supply/bms/uevent") || qcSettingSuupport() || bpSettingSuupport() || pdSupported()
 
-    //获取电池信息
+    // 获取电池信息
     val batteryInfo: String
         get() {
             if (RootFile.fileExists("/sys/class/power_supply/bms/uevent")) {
@@ -114,7 +114,7 @@ class BatteryUnit {
             }
         }
 
-    //获取电池容量
+    // 获取电池容量
     val batteryMAH: String
         get() {
             var path = ""
@@ -152,7 +152,7 @@ class BatteryUnit {
             return "? mAh"
         }
 
-    //快充是否支持修改充电速度设置
+    // 快充是否支持修改充电速度设置
     fun qcSettingSuupport(): Boolean {
         return RootFile.itemExists("/sys/class/power_supply/battery/constant_charge_current_max")
     }
@@ -174,28 +174,30 @@ class BatteryUnit {
         return limit
     }
 
-    //快充是否支持电池保护
+    // 快充是否支持电池保护
     fun bpSettingSuupport(): Boolean {
         return RootFile.itemExists("/sys/class/power_supply/battery/battery_charging_enabled") || RootFile.itemExists("/sys/class/power_supply/battery/input_suspend")
     }
 
-    //修改充电速度限制
+    // 修改充电速度限制
     fun setChargeInputLimit(limit: Int) {
-        val cmd = "echo 0 > /sys/class/power_supply/battery/restricted_charging;" +
-                "echo 0 > /sys/class/power_supply/battery/safety_timer_enabled;" +
-                "chmod 755 /sys/class/power_supply/bms/temp_warm;" +
-                "echo 480 > /sys/class/power_supply/bms/temp_warm;" +
-                "chmod 755 /sys/class/power_supply/battery/constant_charge_current_max;" +
-                "echo 2000000 > /sys/class/power_supply/battery/constant_charge_current_max;" +
-                "echo 2500000 > /sys/class/power_supply/battery/constant_charge_current_max;" +
-                "echo 3000000 > /sys/class/power_supply/battery/constant_charge_current_max;" +
-                "echo 3500000 > /sys/class/power_supply/battery/constant_charge_current_max;" +
-                "echo 4000000 > /sys/class/power_supply/battery/constant_charge_current_max;" +
-                "echo 4500000 > /sys/class/power_supply/battery/constant_charge_current_max;" +
-                "echo 5000000 > /sys/class/power_supply/battery/constant_charge_current_max;" +
-                "echo " + limit + "000 > /sys/class/power_supply/battery/constant_charge_current_max;"
-
-        KeepShellPublic.doCmdSync(cmd)
+        val cmd = StringBuilder()
+        cmd.append("echo 0 > /sys/class/power_supply/battery/restricted_charging;")
+        cmd.append("echo 0 > /sys/class/power_supply/battery/safety_timer_enabled;")
+        cmd.append("chmod 755 /sys/class/power_supply/bms/temp_warm;")
+        cmd.append("echo 480 > /sys/class/power_supply/bms/temp_warm;")
+        cmd.append("chmod 755 /sys/class/power_supply/battery/constant_charge_current_max;")
+        cmd.append("echo 2000000 > /sys/class/power_supply/battery/constant_charge_current_max;")
+        cmd.append("echo 2500000 > /sys/class/power_supply/battery/constant_charge_current_max;")
+        cmd.append("echo 3000000 > /sys/class/power_supply/battery/constant_charge_current_max;")
+        cmd.append("echo 3500000 > /sys/class/power_supply/battery/constant_charge_current_max;")
+        cmd.append("echo 4000000 > /sys/class/power_supply/battery/constant_charge_current_max;")
+        cmd.append("echo 4500000 > /sys/class/power_supply/battery/constant_charge_current_max;")
+        cmd.append("echo 5000000 > /sys/class/power_supply/battery/constant_charge_current_max;")
+        cmd.append("echo ")
+        cmd.append(limit)
+        cmd.append("000 > /sys/class/power_supply/battery/constant_charge_current_max;")
+        KeepShellPublic.doCmdSync(cmd.toString())
     }
 
     fun pdSupported(): Boolean {
@@ -207,7 +209,7 @@ class BatteryUnit {
     }
 
     fun setAllowed(boolean: Boolean): Boolean {
-        val builder = java.lang.StringBuilder()
+        val builder = StringBuilder()
         builder.append("chmod 777 /sys/class/power_supply/usb/pd_allowed\n")
         builder.append("echo ${if (boolean) "1" else "0"}> /sys/class/power_supply/usb/pd_allowed\n")
         builder.append("chmod 777 /sys/class/power_supply/usb/pd_active\n")
@@ -223,42 +225,43 @@ class BatteryUnit {
      * 获取电池温度
      */
     fun getBatteryTemperature(): BatteryStatus {
-    var batteryInfo = KeepShellPublic.doCmdSync("dumpsys battery")
-    var batteryInfos = batteryInfo.split("\n")
+        val batteryInfo = KeepShellPublic.doCmdSync("dumpsys battery")
+        val batteryInfos = batteryInfo.split("\n")
 
-    var batteryStatus = BatteryStatus() // Ensure BatteryStatus has a no-argument constructor
+        val batteryStatus = BatteryStatus() // Ensure BatteryStatus has a no-argument constructor
 
+        // 由于部分手机相同名称的参数重复出现，并且值不同，为了避免这种情况，多个参数只读一次
+        // Flags to avoid duplicate assignment
+        var levelRead = false
+        var tempRead = false
+        var statusRead = false
 
-    // 由于部分手机相同名称的参数重复出现，并且值不同，为了避免这种情况，加个额外处理，同名参数只读一次
-    // Flags to avoid duplicate assignment
-    var levelRead = false
-    var tempRead = false
-    var statusRead = false
-
-    for (item in batteryInfos) {
-        val info = item.trim()
-        val index = info.indexOf(":")
-        if (index > 0 && index < info.length - 1) {
-            val value = info.substring(index + 1).trim()
-            try {
-                when {
-                    info.startsWith("status") && !statusRead -> {
-                        batteryStatus.statusText = value
-                        statusRead = true
+        for (item in batteryInfos) {
+            val info = item.trim()
+            val index = info.indexOf(":")
+            if (index > 0 && index < info.length - 1) {
+                val key = info.substring(0, index).trim()
+                val value = info.substring(index + 1).trim()
+                try {
+                    when {
+                        key == "status" && !statusRead -> {
+                            batteryStatus.statusText = value
+                            statusRead = true
+                        }
+                        key == "level" && !levelRead -> {
+                            batteryStatus.level = value.toInt()
+                            levelRead = true
+                        }
+                        key == "temperature" && !tempRead -> {
+                            batteryStatus.temperature = value.toFloat() / 10
+                            tempRead = true
+                        }
                     }
-                    info.startsWith("level") && !levelRead -> {
-                        batteryStatus.level = value.toInt()
-                        levelRead = true
-                    }
-                    info.startsWith("temperature") && !tempRead -> {
-                        batteryStatus.temperature = value.toFloat() / 10
-                        tempRead = true
-                    }
+                } catch (ex: Exception) {
+                    // Log or handle parsing exceptions if necessary
                 }
-            } catch (ex: Exception) {
-                // Log or handle parsing exceptions if necessary
             }
         }
+        return batteryStatus
     }
-    return batteryStatus
 }

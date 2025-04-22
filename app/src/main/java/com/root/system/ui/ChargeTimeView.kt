@@ -7,7 +7,7 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
 import android.view.View
-import com.root.system.ChargeSpeedStore
+import com.root.store.ChargeSpeedStore
 import com.root.system.R
 
 class ChargeTimeView : View {
