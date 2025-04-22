@@ -223,10 +223,10 @@ class BatteryUnit {
      * 获取电池温度
      */
     fun getBatteryTemperature(): BatteryStatus {
-    val batteryInfo = KeepShellPublic.doCmdSync("dumpsys battery")
-    val batteryInfos = batteryInfo.split("\n")
+    var batteryInfo = KeepShellPublic.doCmdSync("dumpsys battery")
+    var batteryInfos = batteryInfo.split("\n")
 
-    val batteryStatus = BatteryStatus() // Ensure BatteryStatus has a no-argument constructor
+    var batteryStatus = BatteryStatus() // Ensure BatteryStatus has a no-argument constructor
 
 
     // 由于部分手机相同名称的参数重复出现，并且值不同，为了避免这种情况，加个额外处理，同名参数只读一次
