@@ -1,4 +1,4 @@
-package com.root.system.units
+package com.root.system.utils
 
 import com.root.system.models.BatteryStatus
 import com.root.common.shell.KeepShellPublic
