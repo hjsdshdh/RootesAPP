@@ -8,7 +8,7 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.View
 import com.root.system.R
-import com.root.store.ChargeSpeedStore // 修正包路径
+import com.root.store.ChargeSpeedStore
 import kotlin.math.max
 
 class ChargeCurveView : View {
@@ -29,7 +29,7 @@ class ChargeCurveView : View {
 
     private fun init(attrs: AttributeSet?, defStyle: Int) {
         invalidateTextPaintAndMeasurements()
-        storage = ChargeSpeedStore(context) // 确保正确初始化
+        storage = ChargeSpeedStore(context)
     }
 
     private fun invalidateTextPaintAndMeasurements() {}
@@ -46,7 +46,7 @@ class ChargeCurveView : View {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         val samples = storage.statistics()
-        samples.sortBy { it.capacity } // 确保样本对象有capacity属性
+        samples.sortBy { it.capacity }
 
         val pointRadius = 4f
         val paint = Paint().apply {
@@ -57,9 +57,9 @@ class ChargeCurveView : View {
         val dpSize = dp2px(context, 1f)
         val innerPadding = dpSize * 24f
 
-        // 修复空安全和类型转换
+        // 修复类型不匹配：显式转换为Int
         val maxIO = samples.maxOfOrNull { it.io } ?: 0
-        val maxAmpere = (maxIO / 1000) + 1  // 直接计算避免空值
+        val maxAmpere = ((maxIO / 1000) + 1).toInt()  // 关键修复点
 
         val ratioX = (width - innerPadding * 2) / 100f
         val ratioY = (height - innerPadding * 2) / maxAmpere.toFloat()
@@ -75,7 +75,7 @@ class ChargeCurveView : View {
         paint.color = getColorAccent()
         samples.forEach { sample ->
             val pointX = sample.capacity * ratioX + innerPadding
-            val current = sample.io / 1000f  // mA -> A
+            val current = sample.io / 1000f
             val pointY = startY - current * ratioY
 
             if (isFirstPoint) {
@@ -106,7 +106,7 @@ class ChargeCurveView : View {
         val textSize = dpSize * 8.5f
         paint.textSize = textSize
 
-        // 绘制X轴标签
+        // X轴标签
         paint.textAlign = Paint.Align.CENTER
         for (point in 0..100 step 10) {
             paint.color = Color.parseColor("#888888")
@@ -124,7 +124,7 @@ class ChargeCurveView : View {
             )
         }
 
-        // 绘制Y轴标签
+        // Y轴标签
         paint.textAlign = Paint.Align.RIGHT
         for (ampere in 0..maxAmpere) {
             if (ampere == 0) continue

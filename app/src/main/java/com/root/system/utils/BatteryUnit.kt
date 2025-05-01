@@ -1,6 +1,5 @@
 package com.root.system.utils
 
-import com.root.system.models.BatteryStatus
 import com.root.common.shell.KeepShellPublic
 import com.root.common.shell.KernelProrp
 import com.root.common.shell.RootFile
@@ -27,76 +26,92 @@ class BatteryUnit {
                 var mahLength = 0
                 for (info in infos) {
                     try {
-                        if (info.startsWith("POWER_SUPPLY_CHARGE_FULL=")) {
-                            val keyrowd = "POWER_SUPPLY_CHARGE_FULL="
-                            stringBuilder.append("充满容量 = ")
-                            stringBuilder.append(info.substring(keyrowd.length, keyrowd.length + 4))
-                            if (mahLength == 0) {
-                                val value = info.substring(keyrowd.length, info.length)
+                        when {
+                            info.startsWith("POWER_SUPPLY_CHARGE_FULL=") -> {
+                                val keyrowd = "POWER_SUPPLY_CHARGE_FULL="
+                                stringBuilder.append("充满容量 = ")
+                                stringBuilder.append(info.substring(keyrowd.length, keyrowd.length + 4))
+                                if (mahLength == 0) {
+                                    val value = info.substring(keyrowd.length)
+                                    mahLength = value.length
+                                }
+                                stringBuilder.append("mAh")
+                            }
+                            info.startsWith("POWER_SUPPLY_CHARGE_FULL_DESIGN=") -> {
+                                val keyrowd = "POWER_SUPPLY_CHARGE_FULL_DESIGN="
+                                stringBuilder.append("设计容量 = ")
+                                stringBuilder.append(info.substring(keyrowd.length, keyrowd.length + 4))
+                                stringBuilder.append("mAh")
+                                val value = info.substring(keyrowd.length)
                                 mahLength = value.length
                             }
-                            stringBuilder.append("mAh")
-                        } else if (info.startsWith("POWER_SUPPLY_CHARGE_FULL_DESIGN=")) {
-                            val keyrowd = "POWER_SUPPLY_CHARGE_FULL_DESIGN="
-                            stringBuilder.append("设计容量 = ")
-                            stringBuilder.append(info.substring(keyrowd.length, keyrowd.length + 4))
-                            stringBuilder.append("mAh")
-                            val value = info.substring(keyrowd.length, info.length)
-                            mahLength = value.length
-                        } else if (info.startsWith("POWER_SUPPLY_TEMP=")) {
-                            val keyrowd = "POWER_SUPPLY_TEMP="
-                            stringBuilder.append("电池温度 = ")
-                            stringBuilder.append(info.substring(keyrowd.length, keyrowd.length + 2))
-                            stringBuilder.append("°C")
-                        } else if (info.startsWith("POWER_SUPPLY_TEMP_WARM=")) {
-                            val keyrowd = "POWER_SUPPLY_TEMP_WARM="
-                            stringBuilder.append("警戒温度 = ")
-                            val value = Integer.parseInt(info.substring(keyrowd.length, info.length))
-                            stringBuilder.append(value / 10)
-                            stringBuilder.append("°C")
-                        } else if (info.startsWith("POWER_SUPPLY_TEMP_COOL=")) {
-                            val keyrowd = "POWER_SUPPLY_TEMP_COOL="
-                            stringBuilder.append("低温温度 = ")
-                            val value = Integer.parseInt(info.substring(keyrowd.length, info.length))
-                            stringBuilder.append(value / 10)
-                            stringBuilder.append("°C")
-                        } else if (info.startsWith("POWER_SUPPLY_VOLTAGE_NOW=")) {
-                            val keyrowd = "POWER_SUPPLY_VOLTAGE_NOW="
-                            stringBuilder.append("当前电压 = ")
-                            val v = Integer.parseInt(info.substring(keyrowd.length, keyrowd.length + 2))
-                            stringBuilder.append(v / 10.0f)
-                            stringBuilder.append("v")
-                        } else if (info.startsWith("POWER_SUPPLY_VOLTAGE_MAX_DESIGN=")) {
-                            val keyrowd = "POWER_SUPPLY_VOLTAGE_MAX_DESIGN="
-                            stringBuilder.append("设计电压 = ")
-                            val v = Integer.parseInt(info.substring(keyrowd.length, keyrowd.length + 2))
-                            stringBuilder.append(v / 10.0f)
-                            stringBuilder.append("v")
-                        } else if (info.startsWith("POWER_SUPPLY_BATTERY_TYPE=")) {
-                            val keyrowd = "POWER_SUPPLY_BATTERY_TYPE="
-                            stringBuilder.append("电池类型 = ")
-                            stringBuilder.append(info.substring(keyrowd.length, info.length))
-                        } else if (info.startsWith("POWER_SUPPLY_CYCLE_COUNT=")) {
-                            val keyrowd = "POWER_SUPPLY_CYCLE_COUNT="
-                            stringBuilder.append("循环次数 = ")
-                            stringBuilder.append(info.substring(keyrowd.length, info.length))
-                        } else if (info.startsWith("POWER_SUPPLY_CONSTANT_CHARGE_VOLTAGE=")) {
-                            val keyrowd = "POWER_SUPPLY_CONSTANT_CHARGE_VOLTAGE="
-                            stringBuilder.append("充电电压 = ")
-                            val v = Integer.parseInt(info.substring(keyrowd.length, keyrowd.length + 2))
-                            stringBuilder.append(v / 10.0f)
-                            stringBuilder.append("v")
-                        } else if (info.startsWith("POWER_SUPPLY_CAPACITY=")) {
-                            val keyrowd = "POWER_SUPPLY_CAPACITY="
-                            stringBuilder.append("电池电量 = ")
-                            stringBuilder.append(info.substring(keyrowd.length, if (keyrowd.length + 2 > info.length) info.length else keyrowd.length + 2))
-                            stringBuilder.append("%")
-                        } else if (info.startsWith("POWER_SUPPLY_CURRENT_NOW=")) {
-                            val keyrowd = "POWER_SUPPLY_CURRENT_NOW="
-                            io = info.substring(keyrowd.length, info.length)
-                            continue
-                        } else {
-                            continue
+                            info.startsWith("POWER_SUPPLY_TEMP=") -> {
+                                val keyrowd = "POWER_SUPPLY_TEMP="
+                                stringBuilder.append("电池温度 = ")
+                                stringBuilder.append(info.substring(keyrowd.length, keyrowd.length + 2))
+                                stringBuilder.append("°C")
+                            }
+                            info.startsWith("POWER_SUPPLY_TEMP_WARM=") -> {
+                                val keyrowd = "POWER_SUPPLY_TEMP_WARM="
+                                stringBuilder.append("警戒温度 = ")
+                                val value = info.substring(keyrowd.length).toInt()
+                                stringBuilder.append(value / 10)
+                                stringBuilder.append("°C")
+                            }
+                            info.startsWith("POWER_SUPPLY_TEMP_COOL=") -> {
+                                val keyrowd = "POWER_SUPPLY_TEMP_COOL="
+                                stringBuilder.append("低温温度 = ")
+                                val value = info.substring(keyrowd.length).toInt()
+                                stringBuilder.append(value / 10)
+                                stringBuilder.append("°C")
+                            }
+                            info.startsWith("POWER_SUPPLY_VOLTAGE_NOW=") -> {
+                                val keyrowd = "POWER_SUPPLY_VOLTAGE_NOW="
+                                stringBuilder.append("当前电压 = ")
+                                val v = info.substring(keyrowd.length, keyrowd.length + 2).toInt()
+                                stringBuilder.append(v / 10.0f)
+                                stringBuilder.append("v")
+                            }
+                            info.startsWith("POWER_SUPPLY_VOLTAGE_MAX_DESIGN=") -> {
+                                val keyrowd = "POWER_SUPPLY_VOLTAGE_MAX_DESIGN="
+                                stringBuilder.append("设计电压 = ")
+                                val v = info.substring(keyrowd.length, keyrowd.length + 2).toInt()
+                                stringBuilder.append(v / 10.0f)
+                                stringBuilder.append("v")
+                            }
+                            info.startsWith("POWER_SUPPLY_BATTERY_TYPE=") -> {
+                                val keyrowd = "POWER_SUPPLY_BATTERY_TYPE="
+                                stringBuilder.append("电池类型 = ")
+                                stringBuilder.append(info.substring(keyrowd.length))
+                            }
+                            info.startsWith("POWER_SUPPLY_CYCLE_COUNT=") -> {
+                                val keyrowd = "POWER_SUPPLY_CYCLE_COUNT="
+                                stringBuilder.append("循环次数 = ")
+                                stringBuilder.append(info.substring(keyrowd.length))
+                            }
+                            info.startsWith("POWER_SUPPLY_CONSTANT_CHARGE_VOLTAGE=") -> {
+                                val keyrowd = "POWER_SUPPLY_CONSTANT_CHARGE_VOLTAGE="
+                                stringBuilder.append("充电电压 = ")
+                                val v = info.substring(keyrowd.length, keyrowd.length + 2).toInt()
+                                stringBuilder.append(v / 10.0f)
+                                stringBuilder.append("v")
+                            }
+                            info.startsWith("POWER_SUPPLY_CAPACITY=") -> {
+                                val keyrowd = "POWER_SUPPLY_CAPACITY="
+                                stringBuilder.append("电池电量 = ")
+                                stringBuilder.append(
+                                    info.substring(
+                                        keyrowd.length,
+                                        if (keyrowd.length + 2 > info.length) info.length else keyrowd.length + 2
+                                    )
+                                )
+                                stringBuilder.append("%")
+                            }
+                            info.startsWith("POWER_SUPPLY_CURRENT_NOW=") -> {
+                                val keyrowd = "POWER_SUPPLY_CURRENT_NOW="
+                                io = info.substring(keyrowd.length)
+                                continue
+                            }
                         }
                         stringBuilder.append("\n")
                     } catch (ignored: Exception) {
@@ -104,8 +119,8 @@ class BatteryUnit {
                 }
 
                 if (io.isNotEmpty() && mahLength != 0) {
-                    val `val` = if (mahLength < 5) Integer.parseInt(io) else (Integer.parseInt(io) / Math.pow(10.0, (mahLength - 4).toDouble())).toInt()
-                    stringBuilder.insert(0, "放电速度 = " + `val` + "mA\n")
+                    val `val` = if (mahLength < 5) io.toInt() else (io.toInt() / 10.0.pow(mahLength - 4)).toInt()
+                    stringBuilder.insert(0, "放电速度 = ${`val`}mA\n")
                 }
 
                 return stringBuilder.toString()
@@ -130,24 +145,21 @@ class BatteryUnit {
                             chargeFull = chargeFull.substring(keyword.length)
                             if (chargeFull.length > 4)
                                 chargeFull = chargeFull.substring(0, 4)
-                            return chargeFull + "mAh"
+                            return "$chargeFull mAh"
                         }
                     }
                 }
             } else {
-                if (File("/sys/class/power_supply/battery/charge_full").exists()) {
-                    path = "/sys/class/power_supply/battery/charge_full"
-                } else if (File("/sys/class/power_supply/battery/charge_full_design").exists()) {
-                    path = "/sys/class/power_supply/battery/charge_full_design"
-                } else if (File("/sys/class/power_supply/battery/full_bat").exists()) {
-                    path = "/sys/class/power_supply/battery/full_bat"
-                } else {
-                    return "? mAh"
+                path = when {
+                    File("/sys/class/power_supply/battery/charge_full").exists() -> "/sys/class/power_supply/battery/charge_full"
+                    File("/sys/class/power_supply/battery/charge_full_design").exists() -> "/sys/class/power_supply/battery/charge_full_design"
+                    File("/sys/class/power_supply/battery/full_bat").exists() -> "/sys/class/power_supply/battery/full_bat"
+                    else -> return "? mAh"
                 }
                 val txt = KernelProrp.getProp(path)
-                if (txt.trim { it <= ' ' }.isEmpty())
+                if (txt.trim().isEmpty())
                     return "? mAh"
-                return if (txt.length > 4) txt.substring(0, 4) + " mAh" else "$txt mAh"
+                return if (txt.length > 4) "${txt.substring(0, 4)} mAh" else "$txt mAh"
             }
             return "? mAh"
         }
@@ -159,17 +171,14 @@ class BatteryUnit {
 
     fun getqcLimit(): String {
         var limit = KernelProrp.getProp("/sys/class/power_supply/battery/constant_charge_current_max")
-        if (limit.length > 3) {
-            limit = limit.substring(0, limit.length - 3) + "mA"
-        } else if (limit.isNotEmpty()) {
-            try {
-                if (Integer.parseInt(limit) == 0) {
-                    limit = "0"
-                }
-            } catch (ignored: Exception) {
+        limit = when {
+            limit.length > 3 -> "${limit.substring(0, limit.length - 3)}mA"
+            limit.isEmpty() -> "?mA"
+            else -> try {
+                if (limit.toInt() == 0) "0" else limit
+            } catch (e: Exception) {
+                "?mA"
             }
-        } else {
-            return "?mA"
         }
         return limit
     }
@@ -181,23 +190,15 @@ class BatteryUnit {
 
     // 修改充电速度限制
     fun setChargeInputLimit(limit: Int) {
-        val cmd = StringBuilder()
-        cmd.append("echo 0 > /sys/class/power_supply/battery/restricted_charging;")
-        cmd.append("echo 0 > /sys/class/power_supply/battery/safety_timer_enabled;")
-        cmd.append("chmod 755 /sys/class/power_supply/bms/temp_warm;")
-        cmd.append("echo 480 > /sys/class/power_supply/bms/temp_warm;")
-        cmd.append("chmod 755 /sys/class/power_supply/battery/constant_charge_current_max;")
-        cmd.append("echo 2000000 > /sys/class/power_supply/battery/constant_charge_current_max;")
-        cmd.append("echo 2500000 > /sys/class/power_supply/battery/constant_charge_current_max;")
-        cmd.append("echo 3000000 > /sys/class/power_supply/battery/constant_charge_current_max;")
-        cmd.append("echo 3500000 > /sys/class/power_supply/battery/constant_charge_current_max;")
-        cmd.append("echo 4000000 > /sys/class/power_supply/battery/constant_charge_current_max;")
-        cmd.append("echo 4500000 > /sys/class/power_supply/battery/constant_charge_current_max;")
-        cmd.append("echo 5000000 > /sys/class/power_supply/battery/constant_charge_current_max;")
-        cmd.append("echo ")
-        cmd.append(limit)
-        cmd.append("000 > /sys/class/power_supply/battery/constant_charge_current_max;")
-        KeepShellPublic.doCmdSync(cmd.toString())
+        val cmd = """
+            echo 0 > /sys/class/power_supply/battery/restricted_charging
+            echo 0 > /sys/class/power_supply/battery/safety_timer_enabled
+            chmod 755 /sys/class/power_supply/bms/temp_warm
+            echo 480 > /sys/class/power_supply/bms/temp_warm
+            chmod 755 /sys/class/power_supply/battery/constant_charge_current_max
+            echo $limit > /sys/class/power_supply/battery/constant_charge_current_max
+        """.trimIndent()
+        KeepShellPublic.doCmdSync(cmd)
     }
 
     fun pdSupported(): Boolean {
@@ -208,13 +209,15 @@ class BatteryUnit {
         return KernelProrp.getProp("/sys/class/power_supply/usb/pd_allowed") == "1"
     }
 
-    fun setAllowed(boolean: Boolean): Boolean {
-        val builder = StringBuilder()
-        builder.append("chmod 777 /sys/class/power_supply/usb/pd_allowed\n")
-        builder.append("echo ${if (boolean) "1" else "0"}> /sys/class/power_supply/usb/pd_allowed\n")
-        builder.append("chmod 777 /sys/class/power_supply/usb/pd_active\n")
-        builder.append("echo 1 > /sys/class/power_supply/usb/pd_active\n")
-        return KeepShellPublic.doCmdSync(builder.toString()) != "error"
+    fun setAllowed(enable: Boolean): Boolean {
+        val value = if (enable) "1" else "0"
+        val cmd = """
+            chmod 777 /sys/class/power_supply/usb/pd_allowed
+            echo $value > /sys/class/power_supply/usb/pd_allowed
+            chmod 777 /sys/class/power_supply/usb/pd_active
+            echo 1 > /sys/class/power_supply/usb/pd_active
+        """.trimIndent()
+        return KeepShellPublic.doCmdSync(cmd) != "error"
     }
 
     fun pdActive(): Boolean {
@@ -226,39 +229,21 @@ class BatteryUnit {
      */
     fun getBatteryTemperature(): BatteryStatus {
         val batteryInfo = KeepShellPublic.doCmdSync("dumpsys battery")
-        val batteryInfos = batteryInfo.split("\n")
+        val batteryStatus = BatteryStatus()
 
-        val batteryStatus = BatteryStatus() // Ensure BatteryStatus has a no-argument constructor
-
-        // 由于部分手机相同名称的参数重复出现，并且值不同，为了避免这种情况，多个参数只读一次
-        // Flags to avoid duplicate assignment
-        var levelRead = false
-        var tempRead = false
-        var statusRead = false
-
-        for (item in batteryInfos) {
+        batteryInfo.split("\n").forEach { item ->
             val info = item.trim()
             val index = info.indexOf(":")
-            if (index > 0 && index < info.length - 1) {
+            if (index in 1 until info.length) {
                 val key = info.substring(0, index).trim()
                 val value = info.substring(index + 1).trim()
                 try {
-                    when {
-                        key == "status" && !statusRead -> {
-                            batteryStatus.statusText = value
-                            statusRead = true
-                        }
-                        key == "level" && !levelRead -> {
-                            batteryStatus.level = value.toInt()
-                            levelRead = true
-                        }
-                        key == "temperature" && !tempRead -> {
-                            batteryStatus.temperature = value.toFloat() / 10
-                            tempRead = true
-                        }
+                    when (key) {
+                        "status" -> batteryStatus.statusText = value
+                        "level" -> batteryStatus.level = value.toInt()
+                        "temperature" -> batteryStatus.temperature = value.toFloat() / 10
                     }
-                } catch (ex: Exception) {
-                    // Log or handle parsing exceptions if necessary
+                } catch (_: Exception) {
                 }
             }
         }
