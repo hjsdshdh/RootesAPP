@@ -1,16 +1,20 @@
-package com.root.ui.charge
+package com.root.system.ui
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Path
 import android.util.AttributeSet
 import android.view.View
-import com.root.store.ChargeSpeedStore
 import com.root.system.R
+import com.root.store.ChargeSpeedStore // 修正包路径
+import kotlin.math.max
 
 class ChargeCurveView : View {
     private lateinit var storage: ChargeSpeedStore
-    private val dashPathEffect = DashPathEffect(floatArrayOf(4f, 8f), 0f)
 
+    // 构造器
     constructor(context: Context) : super(context) {
         init(null, 0)
     }
@@ -25,24 +29,15 @@ class ChargeCurveView : View {
 
     private fun init(attrs: AttributeSet?, defStyle: Int) {
         invalidateTextPaintAndMeasurements()
-        storage = ChargeSpeedStore(this.context)
+        storage = ChargeSpeedStore(context) // 确保正确初始化
     }
 
     private fun invalidateTextPaintAndMeasurements() {}
 
-
     fun getColorAccent(): Int {
-        /*
-        val typedValue = TypedValue()
-        this.activity.theme.resolveAttribute(R.attr.colorAccent, typedValue, true)
-        return typedValue.data
-        */
         return resources.getColor(R.color.colorAccent)
     }
 
-    /**
-     * dp转换成px
-     */
     private fun dp2px(context: Context, dpValue: Float): Int {
         val scale = context.resources.displayMetrics.density
         return (dpValue * scale + 0.5f).toInt()
@@ -51,107 +46,95 @@ class ChargeCurveView : View {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         val samples = storage.statistics()
+        samples.sortBy { it.capacity } // 确保样本对象有capacity属性
 
-        val potintRadius = 12f
-        val paint = Paint()
-        paint.strokeWidth = 2f
+        val pointRadius = 4f
+        val paint = Paint().apply {
+            strokeWidth = 2f
+            isAntiAlias = true
+        }
 
-        val dpSize = dp2px(this.context, 1f)
+        val dpSize = dp2px(context, 1f)
         val innerPadding = dpSize * 24f
 
-        val maxIO = samples.map { it.io }.max()
-        var maxAmpere = if (maxIO != null) (maxIO / 1000 + 1) else 10
-        if (maxAmpere < 3) {
-            maxAmpere = 3
-        } else if (maxAmpere < 6) {
-            maxAmpere = 6
-        }
-        val yScale = when {
-            maxAmpere < 7 -> 2
-            else -> 1
-        }
+        // 修复空安全和类型转换
+        val maxIO = samples.maxOfOrNull { it.io } ?: 0
+        val maxAmpere = (maxIO / 1000) + 1  // 直接计算避免空值
 
-        val ratioX = (this.width - innerPadding - innerPadding) * 1.0 / 100 // 横向比率
-        val ratioY = ((this.height - innerPadding - innerPadding) * 1.0 / maxAmpere).toFloat() // 纵向比率
-        val stratY = height - innerPadding
+        val ratioX = (width - innerPadding * 2) / 100f
+        val ratioY = (height - innerPadding * 2) / maxAmpere.toFloat()
+        val startY = height - innerPadding
 
-        val pathFilterAlpha = Path()
+        val path = Path()
         var isFirstPoint = true
 
+        // 绘制网格和坐标轴
+        drawGrid(canvas, paint, dpSize, innerPadding, ratioX, maxAmpere, ratioY)
+
+        // 绘制曲线
+        paint.color = getColorAccent()
+        samples.forEach { sample ->
+            val pointX = sample.capacity * ratioX + innerPadding
+            val current = sample.io / 1000f  // mA -> A
+            val pointY = startY - current * ratioY
+
+            if (isFirstPoint) {
+                path.moveTo(pointX, pointY)
+                isFirstPoint = false
+            } else {
+                path.lineTo(pointX, pointY)
+            }
+            canvas.drawCircle(pointX, pointY, pointRadius, paint)
+        }
+
+        // 绘制路径
+        paint.style = Paint.Style.STROKE
+        paint.strokeWidth = 4f
+        paint.color = Color.parseColor("#8BC34A")
+        canvas.drawPath(path, paint)
+    }
+
+    private fun drawGrid(
+        canvas: Canvas,
+        paint: Paint,
+        dpSize: Int,
+        innerPadding: Float,
+        ratioX: Float,
+        maxAmpere: Int,
+        ratioY: Float
+    ) {
         val textSize = dpSize * 8.5f
         paint.textSize = textSize
 
+        // 绘制X轴标签
         paint.textAlign = Paint.Align.CENTER
-        for (point in 0..101) {
-            if (point % 20 == 0) {
-                paint.color = Color.parseColor("#888888")
-                val text = (point).toString() + "%"
-                canvas.drawText(
-                        text,
-                        (point * ratioX).toInt() + innerPadding,
-                        this.height - innerPadding + textSize + (dpSize * 2),
-                        paint
-                )
-                paint.strokeWidth = 2f
-            } else {
-                paint.strokeWidth = 1f
-            }
-            if (point % 10 == 0) {
-                paint.color = Color.parseColor("#40888888")
-                canvas.drawLine(
-                        (point * ratioX).toInt() + innerPadding, innerPadding,
-                        (point * ratioX).toInt() + innerPadding, this.height - innerPadding, paint)
-            }
-        }
-
-        paint.textAlign = Paint.Align.RIGHT
-
-        val yPoints = yScale * maxAmpere
-        paint.pathEffect = dashPathEffect
-        for (point in 0..yPoints) {
-            val valueY = (point / 1.0 / yScale)
+        for (point in 0..100 step 10) {
             paint.color = Color.parseColor("#888888")
-            if (point > 0 && point % 2 == 0L) {
-                canvas.drawText(
-                        valueY.toString() + "A",
-                        innerPadding - dpSize * 4,
-                        innerPadding + ((maxAmpere - valueY) * ratioY).toInt() + textSize / 2.2f,
-                        paint
-                )
-            }
-            paint.strokeWidth = if (point == 0L) 2f else 1f
-            paint.color = Color.parseColor("#aa888888")
-            canvas.drawLine(
-                    innerPadding, innerPadding + ((maxAmpere - valueY) * ratioY).toInt(),
-                    (this.width - innerPadding), innerPadding + ((maxAmpere - valueY) * ratioY).toInt(), paint)
+            canvas.drawText(
+                "$point%",
+                innerPadding + point * ratioX,
+                height - innerPadding + textSize + dpSize * 2,
+                paint
+            )
+            canvas.drawCircle(
+                innerPadding + point * ratioX,
+                height - innerPadding,
+                4f,
+                paint
+            )
         }
 
-        paint.pathEffect = null
-        paint.color = Color.parseColor("#801474e4")
-        for (sample in samples) {
-            val pointX = (sample.capacity * ratioX).toFloat() + innerPadding
-            val io = if (sample.io < 0) 0F else { sample.io / 1000F } // mA -> A
-
-            if (isFirstPoint) {
-                pathFilterAlpha.moveTo(pointX, stratY - (io * ratioY))
-                isFirstPoint = false
-                canvas.drawCircle(pointX, stratY - (io * ratioY), potintRadius, paint)
-            } else {
-                pathFilterAlpha.lineTo(pointX, stratY - (io * ratioY))
-            }
+        // 绘制Y轴标签
+        paint.textAlign = Paint.Align.RIGHT
+        for (ampere in 0..maxAmpere) {
+            if (ampere == 0) continue
+            paint.color = Color.parseColor("#888888")
+            canvas.drawText(
+                "${ampere}A",
+                innerPadding - dpSize * 4,
+                innerPadding + (maxAmpere - ampere) * ratioY + textSize / 2.2f,
+                paint
+            )
         }
-
-        paint.reset()
-        paint.isAntiAlias = true
-        paint.style = Paint.Style.STROKE
-        paint.strokeWidth = 8f
-
-        paint.color = Color.parseColor("#1474e4")
-        canvas.drawPath(pathFilterAlpha, paint)
-
-        // paint.textSize = dpSize * 12f
-        // paint.textAlign = Paint.Align.RIGHT
-        // paint.style = Paint.Style.FILL
-        // canvas.drawText("电池电流/电量", width - innerPadding, innerPadding - (dpSize * 4f), paint)
     }
 }
