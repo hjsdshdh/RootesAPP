@@ -3,12 +3,19 @@ package com.root.system.utils
 import com.root.common.shell.KeepShellPublic
 import com.root.common.shell.KernelProrp
 import com.root.common.shell.RootFile
-import com.root.system.BatteryStatus
 import java.io.File
+import kotlin.math.pow
 
 /**
  * Created by Hello on 2017/11/01.
  */
+
+// 添加BatteryStatus类定义
+class BatteryStatus {
+    var statusText: String = ""
+    var level: Int = 0
+    var temperature: Float = 0.0f
+}
 
 class BatteryUnit {
     // 是否兼容此设备
@@ -119,7 +126,7 @@ class BatteryUnit {
                 }
 
                 if (io.isNotEmpty() && mahLength != 0) {
-                    val `val` = if (mahLength < 5) io.toInt() else (io.toInt() / 10.0.pow(mahLength - 4)).toInt()
+                    val `val` = if (mahLength < 5) io.toInt() else (io.toInt() / pow(10.0, (mahLength - 4).toDouble())).toInt()
                     stringBuilder.insert(0, "放电速度 = ${`val`}mA\n")
                 }
 
