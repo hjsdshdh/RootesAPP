@@ -22,7 +22,7 @@ class RamChatView : View {
     private var textSize = 20
     //-------------画笔相关-------------
     //圆环的画笔
-    private var cyclePaint: Paint? = null
+    private var cyclePaint: Paint = Paint()
     //文字的画笔
     private var textPaint: Paint? = null
     //标注的画笔
@@ -94,10 +94,9 @@ class RamChatView : View {
      */
     private fun initPaint() {
         //边框画笔
-        cyclePaint = Paint()
-        cyclePaint!!.isAntiAlias = true
-        cyclePaint!!.style = Paint.Style.STROKE
-        cyclePaint!!.strokeWidth = mStrokeWidth
+        cyclePaint.isAntiAlias = true
+        cyclePaint.style = Paint.Style.STROKE
+        cyclePaint.strokeWidth = mStrokeWidth
         //文字画笔
         textPaint = Paint()
         textPaint!!.isAntiAlias = true
@@ -112,34 +111,29 @@ class RamChatView : View {
         labelPaint!!.strokeWidth = 2f
     }
 
-/**
- * 画圆环
- * @param canvas
- */
-private fun drawCycle(canvas: Canvas) {
-    val startPercent = -90f
-    cyclePaint!!.color = 0x44888888 //Color.parseColor("#888888")
-    cyclePaint!!.strokeCap = Paint.Cap.ROUND
-    canvas.drawArc(RectF(0f, 0f, mRadius, mRadius), 0f, 360f, false, cyclePaint)
-    if (ratio == 0) {
-        return
-    }
+    /**
+     * 画圆环
+     * @param canvas
+     */
+    private fun drawCycle(canvas: Canvas) {
+        val startPercent = -90f
+        cyclePaint.color = 0x44888888 //Color.parseColor("#888888")
+        cyclePaint.strokeCap = Paint.Cap.ROUND
+        canvas.drawArc(RectF(0f, 0f, mRadius, mRadius), 0f, 360f, false, cyclePaint)
+        if (ratio == 0) {
+            return
+        }
 
-    cyclePaint!!.color = resources.getColor(R.color.colorAccent)
-    cyclePaint!!.alpha = (ratio * 255 / 100);
-    
-    // 创建本地变量保存cyclePaint，避免智能类型转换错误
-    val paint = cyclePaint
-    if (paint != null) {
-        canvas.drawArc(RectF(0f, 0f, mRadius, mRadius), -90f, (ratioState * 3.6f) + 1f, false, paint)
+        cyclePaint.color = resources.getColor(R.color.colorAccent)
+        cyclePaint.alpha = (ratio * 255 / 100)
+
+        canvas.drawArc(RectF(0f, 0f, mRadius, mRadius), -90f, (ratioState * 3.6f) + 1f, false, cyclePaint)
+        if (ratioState < ratio) {
+            ratioState += 1
+            invalidate()
+        } else if (ratioState > ratio) {
+            ratioState -= 1
+            invalidate()
+        }
     }
-    
-    if (ratioState < ratio) {
-        ratioState += 1
-        invalidate()
-    } else if (ratioState > ratio) {
-        ratioState -= 1
-        invalidate()
-    }
-  }
 }
