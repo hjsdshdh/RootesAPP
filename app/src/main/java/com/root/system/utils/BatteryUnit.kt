@@ -126,7 +126,7 @@ class BatteryUnit {
                 }
 
                 if (io.isNotEmpty() && mahLength != 0) {
-                    val `val` = if (mahLength < 5) io.toInt() else (io.toInt() / pow(10.0, (mahLength - 4).toDouble())).toInt()
+                    val `val` = if (mahLength < 5) io.toInt() else (io.toInt() / kotlin.math.pow(10.0, (mahLength - 4).toDouble())).toInt()
                     stringBuilder.insert(0, "放电速度 = ${`val`}mA\n")
                 }
 
