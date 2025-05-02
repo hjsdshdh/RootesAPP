@@ -112,29 +112,34 @@ class RamChatView : View {
         labelPaint!!.strokeWidth = 2f
     }
 
-    /**
-     * 画圆环
-     * @param canvas
-     */
-    private fun drawCycle(canvas: Canvas) {
-        val startPercent = -90f
-        cyclePaint!!.color = 0x44888888 //Color.parseColor("#888888")
-        cyclePaint!!.strokeCap = Paint.Cap.ROUND
-        canvas.drawArc(RectF(0f, 0f, mRadius, mRadius), 0f, 360f, false, cyclePaint)
-        if (ratio == 0) {
-            return
-        }
-
-        cyclePaint!!.color = resources.getColor(R.color.colorAccent)
-        cyclePaint!!.alpha = (ratio * 255 / 100);
-
-        canvas.drawArc(RectF(0f, 0f, mRadius, mRadius), -90f, (ratioState * 3.6f) + 1f, false, cyclePaint!!)
-        if (ratioState < ratio) {
-            ratioState += 1
-            invalidate()
-        } else if (ratioState > ratio) {
-            ratioState -= 1
-            invalidate()
-        }
+/**
+ * 画圆环
+ * @param canvas
+ */
+private fun drawCycle(canvas: Canvas) {
+    val startPercent = -90f
+    cyclePaint!!.color = 0x44888888 //Color.parseColor("#888888")
+    cyclePaint!!.strokeCap = Paint.Cap.ROUND
+    canvas.drawArc(RectF(0f, 0f, mRadius, mRadius), 0f, 360f, false, cyclePaint)
+    if (ratio == 0) {
+        return
     }
+
+    cyclePaint!!.color = resources.getColor(R.color.colorAccent)
+    cyclePaint!!.alpha = (ratio * 255 / 100);
+    
+    // 创建本地变量保存cyclePaint，避免智能类型转换错误
+    val paint = cyclePaint
+    if (paint != null) {
+        canvas.drawArc(RectF(0f, 0f, mRadius, mRadius), -90f, (ratioState * 3.6f) + 1f, false, paint)
+    }
+    
+    if (ratioState < ratio) {
+        ratioState += 1
+        invalidate()
+    } else if (ratioState > ratio) {
+        ratioState -= 1
+        invalidate()
+    }
+  }
 }

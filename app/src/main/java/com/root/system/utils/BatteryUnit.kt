@@ -4,7 +4,6 @@ import com.root.common.shell.KeepShellPublic
 import com.root.common.shell.KernelProrp
 import com.root.common.shell.RootFile
 import java.io.File
-import kotlin.math.pow
 
 /**
  * Created by Hello on 2017/11/01.
@@ -126,8 +125,9 @@ class BatteryUnit {
                 }
 
                 if (io.isNotEmpty() && mahLength != 0) {
-                    val `val` = if (mahLength < 5) io.toInt() else (io.toInt() / kotlin.math.pow(10.0, (mahLength - 4).toDouble())).toInt()
-                    stringBuilder.insert(0, "放电速度 = ${`val`}mA\n")
+                    val powerDivisor = if (mahLength < 5) 1 else Math.pow(10.0, (mahLength - 4).toDouble()).toInt()
+                    val currentValue = io.toInt() / powerDivisor
+                    stringBuilder.insert(0, "放电速度 = ${currentValue}mA\n")
                 }
 
                 return stringBuilder.toString()
