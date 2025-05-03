@@ -74,7 +74,7 @@ class ActivityStartSplash : Activity() {
         try {
             signCode = String(
                 Base64.decode(
-                    "M0Y6NUM6RkI6Q0E6N0U6NkU6OUY6Q0E6MzE6NjY6NjI6NUI6Mjc6M0E6MDM6OEI6RjM6OUY6NEU6ODU=",
+                    "QzQ6RTI6N0I6NDQ6NEU6NDU6QjQ6RDU6MjI6ODc6RkQ6QjY6REQ6NUM6MzI6Qzk6RDM6NzY6Njc6MjY=",
                     Base64.DEFAULT
                 )
             )
