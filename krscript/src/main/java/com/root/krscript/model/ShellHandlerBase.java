@@ -3,6 +3,7 @@ package com.root.krscript.model;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 
